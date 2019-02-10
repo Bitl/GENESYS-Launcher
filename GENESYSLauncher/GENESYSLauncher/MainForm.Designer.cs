@@ -92,8 +92,8 @@ namespace GENESYSLauncher
 			this.label11 = new System.Windows.Forms.Label();
 			this.textBox7 = new System.Windows.Forms.TextBox();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.label8 = new System.Windows.Forms.Label();
+			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.pictureBox2 = new System.Windows.Forms.PictureBox();
 			this.button1 = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -316,6 +316,14 @@ namespace GENESYSLauncher
 			this.tabPage1.Text = "Half-Life 2: Suvivor Ver2.0";
 			this.tabPage1.UseVisualStyleBackColor = true;
 			// 
+			// label8
+			// 
+			this.label8.Location = new System.Drawing.Point(222, 244);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(267, 37);
+			this.label8.TabIndex = 4;
+			this.label8.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			// 
 			// groupBox3
 			// 
 			this.groupBox3.Controls.Add(this.pictureBox2);
@@ -326,14 +334,6 @@ namespace GENESYSLauncher
 			this.groupBox3.TabIndex = 7;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Main";
-			// 
-			// label8
-			// 
-			this.label8.Location = new System.Drawing.Point(222, 244);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(267, 37);
-			this.label8.TabIndex = 4;
-			this.label8.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// pictureBox2
 			// 
@@ -494,12 +494,13 @@ namespace GENESYSLauncher
 			// 
 			// button8
 			// 
-			this.button8.Location = new System.Drawing.Point(370, 42);
+			this.button8.Location = new System.Drawing.Point(376, 42);
 			this.button8.Name = "button8";
-			this.button8.Size = new System.Drawing.Size(75, 23);
+			this.button8.Size = new System.Drawing.Size(120, 23);
 			this.button8.TabIndex = 6;
-			this.button8.Text = "Debug";
+			this.button8.Text = "Debug Launch Paths";
 			this.button8.UseVisualStyleBackColor = true;
+			this.button8.Visible = false;
 			this.button8.Click += new System.EventHandler(this.Button8Click);
 			// 
 			// MainForm

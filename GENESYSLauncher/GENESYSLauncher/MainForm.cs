@@ -50,7 +50,6 @@ namespace GENESYSLauncher
 			
 			#region cyberdiver load settings
 			textBox7.Text = Settings.ReadVal("CyberDiver_LaunchOptions");
-			checkBox4.Checked = Convert.ToBoolean(Settings.ReadVal("CyberDiver_ArcadeMenu_Toggle"));
 			#endregion
 			
 			#region l4d survivors load settings
@@ -131,12 +130,6 @@ namespace GENESYSLauncher
 			}
 		}
 		
-		//hl2 survivor game information button
-		void Button2Click(object sender, EventArgs e)
-		{
-			//soontm
-		}
-		
 		//hl2 survivor launch button
 		void Button1Click(object sender, EventArgs e)
 		{
@@ -158,18 +151,6 @@ namespace GENESYSLauncher
 			Settings.WriteVal("CyberDiver_LaunchOptions",textBox7.Text);
 		}
 		
-		//cyber diver arcade interface toggle
-		void CheckBox4CheckedChanged(object sender, EventArgs e)
-		{
-			Settings.WriteVal("CyberDiver_ArcadeMenu_Toggle",Convert.ToString(checkBox4.Checked));
-		}
-		
-		//cyber diver game information
-		void Button5Click(object sender, EventArgs e)
-		{
-			//soontm
-		}
-		
 		//cyber diver launch
 		void Button6Click(object sender, EventArgs e)
 		{
@@ -189,12 +170,6 @@ namespace GENESYSLauncher
 		void TextBox6TextChanged(object sender, EventArgs e)
 		{
 			Settings.WriteVal("L4DS_LaunchOptions",textBox6.Text);
-		}
-		
-		//l4d survivors game information
-		void Button4Click(object sender, EventArgs e)
-		{
-			//soontm
 		}
 		
 		// l4d survivors launch

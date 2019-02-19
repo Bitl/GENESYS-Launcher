@@ -35,8 +35,6 @@ namespace GENESYSLauncher
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.PictureBox pictureBox3;
 		private System.Windows.Forms.Button button6;
-		private System.Windows.Forms.GroupBox groupBox5;
-		private System.Windows.Forms.CheckBox checkBox4;
 		private System.Windows.Forms.GroupBox groupBox6;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.TextBox textBox7;
@@ -86,8 +84,6 @@ namespace GENESYSLauncher
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.pictureBox3 = new System.Windows.Forms.PictureBox();
 			this.button6 = new System.Windows.Forms.Button();
-			this.groupBox5 = new System.Windows.Forms.GroupBox();
-			this.checkBox4 = new System.Windows.Forms.CheckBox();
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.textBox7 = new System.Windows.Forms.TextBox();
@@ -119,7 +115,6 @@ namespace GENESYSLauncher
 			this.tabPage2.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-			this.groupBox5.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -213,7 +208,6 @@ namespace GENESYSLauncher
 			// tabPage2
 			// 
 			this.tabPage2.Controls.Add(this.groupBox4);
-			this.tabPage2.Controls.Add(this.groupBox5);
 			this.tabPage2.Controls.Add(this.groupBox6);
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
@@ -253,26 +247,6 @@ namespace GENESYSLauncher
 			this.button6.Text = "Launch";
 			this.button6.UseVisualStyleBackColor = true;
 			this.button6.Click += new System.EventHandler(this.Button6Click);
-			// 
-			// groupBox5
-			// 
-			this.groupBox5.Controls.Add(this.checkBox4);
-			this.groupBox5.Location = new System.Drawing.Point(3, 79);
-			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(200, 43);
-			this.groupBox5.TabIndex = 9;
-			this.groupBox5.TabStop = false;
-			this.groupBox5.Text = "Debug Settings";
-			// 
-			// checkBox4
-			// 
-			this.checkBox4.Location = new System.Drawing.Point(7, 19);
-			this.checkBox4.Name = "checkBox4";
-			this.checkBox4.Size = new System.Drawing.Size(187, 18);
-			this.checkBox4.TabIndex = 0;
-			this.checkBox4.Text = "Toggle Arcade Interface";
-			this.checkBox4.UseVisualStyleBackColor = true;
-			this.checkBox4.CheckedChanged += new System.EventHandler(this.CheckBox4CheckedChanged);
 			// 
 			// groupBox6
 			// 
@@ -531,7 +505,6 @@ namespace GENESYSLauncher
 			this.tabPage2.ResumeLayout(false);
 			this.groupBox4.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-			this.groupBox5.ResumeLayout(false);
 			this.groupBox6.ResumeLayout(false);
 			this.groupBox6.PerformLayout();
 			this.tabPage1.ResumeLayout(false);

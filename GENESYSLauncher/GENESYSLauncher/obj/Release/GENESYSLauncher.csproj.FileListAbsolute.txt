@@ -1,0 +1,6 @@
+C:\Users\Bitl\Documents\GitHub\GENESYS\GENESYS-Launcher\GENESYSLauncher\GENESYSLauncher\bin\Release\GENESYSLauncher.exe.config
+C:\Users\Bitl\Documents\GitHub\GENESYS\GENESYS-Launcher\GENESYSLauncher\GENESYSLauncher\bin\Release\GENESYSLauncher.exe
+C:\Users\Bitl\Documents\GitHub\GENESYS\GENESYS-Launcher\GENESYSLauncher\GENESYSLauncher\obj\Release\GENESYSLauncher.csprojResolveAssemblyReference.cache
+C:\Users\Bitl\Documents\GitHub\GENESYS\GENESYS-Launcher\GENESYSLauncher\GENESYSLauncher\obj\Release\GENESYSLauncher.MainForm.resources
+C:\Users\Bitl\Documents\GitHub\GENESYS\GENESYS-Launcher\GENESYSLauncher\GENESYSLauncher\obj\Release\GENESYSLauncher.csproj.GenerateResource.Cache
+C:\Users\Bitl\Documents\GitHub\GENESYS\GENESYS-Launcher\GENESYSLauncher\GENESYSLauncher\obj\Release\GENESYSLauncher.exe

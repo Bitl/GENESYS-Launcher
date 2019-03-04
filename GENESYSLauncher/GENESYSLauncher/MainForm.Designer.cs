@@ -49,6 +49,7 @@ namespace GENESYSLauncher
 		private System.Windows.Forms.Label label21;
 		private System.Windows.Forms.Label label22;
 		private System.Windows.Forms.Button button8;
+		private System.Windows.Forms.Label label1;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -107,6 +108,7 @@ namespace GENESYSLauncher
 			this.label21 = new System.Windows.Forms.Label();
 			this.label22 = new System.Windows.Forms.Label();
 			this.button8 = new System.Windows.Forms.Button();
+			this.label1 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.tabPage3.SuspendLayout();
 			this.groupBox7.SuspendLayout();
@@ -137,6 +139,7 @@ namespace GENESYSLauncher
 			// 
 			// tabPage3
 			// 
+			this.tabPage3.Controls.Add(this.label1);
 			this.tabPage3.Controls.Add(this.groupBox7);
 			this.tabPage3.Controls.Add(this.groupBox9);
 			this.tabPage3.Location = new System.Drawing.Point(4, 22);
@@ -476,6 +479,19 @@ namespace GENESYSLauncher
 			this.button8.UseVisualStyleBackColor = true;
 			this.button8.Visible = false;
 			this.button8.Click += new System.EventHandler(this.Button8Click);
+			// 
+			// label1
+			// 
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.ForeColor = System.Drawing.Color.Red;
+			this.label1.Location = new System.Drawing.Point(3, 76);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(200, 98);
+			this.label1.TabIndex = 11;
+			this.label1.Text = "To customize your character, use the \"-console\" launch option, then use the comma" +
+	"nd \"customAvatar_controller\". After customizing your character, press \"Reload\" t" +
+	"hen \"Start\" to get back in the game. ";
+			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// MainForm
 			// 

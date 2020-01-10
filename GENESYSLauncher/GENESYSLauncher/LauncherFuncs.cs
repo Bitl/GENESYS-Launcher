@@ -121,24 +121,19 @@ namespace GENESYSLauncher
           			case GameType.HL2S:
               		Name = "Half-Life 2 Survivor Ver2.0";
 					EXEName = "hl2.exe";
-					CommandLine = "-sw -game hl2mp -heapsize 512000 -width 1360 -height 768 -windowed"
-						+ (Convert.ToBoolean(Settings.ReadVal("HL2S_ArcadeMenu_Toggle")) ? " -ac" : "") 
-						+ " -io 0 -nesys 0 " 
-						+ Settings.ReadVal("HL2S_LaunchOptions");
+					CommandLine = "-sw -game hl2mp -heapsize 512000 -width 1360 -height 768 -windowed " + (Convert.ToBoolean(Settings.ReadVal("HL2S_ArcadeMenu_Toggle")) ? " -ac" : "") + " -io 0 -nesys 0 " + Settings.ReadVal("HL2S_LaunchOptions");
               		break;
               		
           			case GameType.CyberDiver:
               		Name = "Cyber Diver";
 					EXEName = "hl2.exe";
-					CommandLine = "-sw -game bs09 -heapsize 1024000 -width 1360 -height 768 -noborder -windowed -ac -io 0 -nesys 0 " 
-						+ Settings.ReadVal("CyberDiver_LaunchOptions");
+					CommandLine = "-sw -game bs09 -heapsize 1024000 -width 1360 -height 768 -noborder -windowed -ac -io 0 -nesys 0 " + Settings.ReadVal("CyberDiver_LaunchOptions");
               		break;
               		
               		case GameType.L4DS:
               		Name = "Left 4 Dead Survivors";
 					EXEName = "left4dead2.exe";
-					CommandLine ="-arcadeIO_InitializeSkip -game left4dead2 -language japanese -noborder -windowed " 
-						+ Settings.ReadVal("L4DS_LaunchOptions");
+					CommandLine ="-arcadeIO_InitializeSkip -game left4dead2 -language japanese -noborder -windowed " + Settings.ReadVal("L4DS_LaunchOptions");
               		break;
               		
           			default:

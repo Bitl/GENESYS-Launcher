@@ -87,14 +87,14 @@ namespace GENESYSLauncher
 			
 			if (checkBox2.Checked)
 			{
-				textBox5.ReadOnly = true;
-				textBox5.Enabled = false;
+                textBox5.ReadOnly = false;
+                textBox5.Enabled = true;
 			}
 			else
 			{
-				textBox5.ReadOnly = false;
-				textBox5.Enabled = true;
-			}
+                textBox5.ReadOnly = true;
+                textBox5.Enabled = false;
+            }
 		}
 		
 		//hl2 survivor custom NESYS host IP
@@ -111,21 +111,16 @@ namespace GENESYSLauncher
 			switch(status)
 			{
 				case NESYSRedirection.NESYSRedirectionStatus.Redirected:
-					label8.Text = "Host redirection completed!";
-            		label8.ForeColor = Color.Lime;
+					MessageBox.Show("Host redirection completed!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
 				break;
 				case NESYSRedirection.NESYSRedirectionStatus.FailedToRedirect:
-					label8.Text = "ERROR: You have not ran the launcher as administator or the launcher cannot find the hosts file.";
-            		label8.ForeColor = Color.Red;
+					MessageBox.Show("ERROR: You have not ran the launcher as administator or the launcher cannot find the hosts file", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 				break;
 				case NESYSRedirection.NESYSRedirectionStatus.AlreadyRedirected:
-					label8.Text = "You already did the host redirection!";
-            		label8.ForeColor = Color.Yellow;
+					MessageBox.Show("You already did the host redirection!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
 				break;
 				default:
-					label8.Text = "oh look, nothing!";
-					var rnd = new Random();
-            		label8.ForeColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));;
+					MessageBox.Show("oh look, nothing!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Question);
             	break;
 			}
 		}

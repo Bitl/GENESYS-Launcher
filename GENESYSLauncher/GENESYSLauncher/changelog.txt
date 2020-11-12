@@ -1,0 +1,7 @@
+v2.0:
+- Redid the settings system to use Visual Studio's setting system.
+- Rewrote the code behind the scenes for better efficency.
+- The launcher will now detect which of the 3 games you have installed, and will remove necessary entries in the list.
+- You can now view information about a game by pressing the "GAME INFORMATION" button.
+- Added Discord integration. (WIP)
+	- As a result, you can only hide the launcher upon loading a game.

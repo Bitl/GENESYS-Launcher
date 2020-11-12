@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace GENESYSLauncher
 {
@@ -45,8 +46,8 @@ namespace GENESYSLauncher
             		writer.Write(Environment.NewLine);
             		writer.Write("##Survivor host redirection");
             		writer.Write(Environment.NewLine);
-            		bool customiptoggle = Convert.ToBoolean(Settings.ReadVal("HL2S_CustomNESYSHostIP_Toggle"));
-            		string customip = Convert.ToString(Settings.ReadVal("HL2S_CustomNESYSHostIP"));
+            		bool customiptoggle = Settings.ReadBool("HL2S_CustomNESYSHostIP_Toggle");
+            		string customip = Settings.ReadString("HL2S_CustomNESYSHostIP");
             		if (customiptoggle == false)
 					{
             			writer.Write("127.0.0.1    bg3test.cg.taito.co.jp");
@@ -72,21 +73,28 @@ namespace GENESYSLauncher
 	
 	public static class Settings
 	{
-		public static string ReadVal(string setting)
+		public static string ReadString(string setting)
 		{
-			return ConfigurationManager.AppSettings[setting];
+            return Properties.Settings.Default[setting].ToString();
 		}
-		
-		public static void WriteVal(string setting, string value)
+
+        public static bool ReadBool(string setting)
+        {
+            return Convert.ToBoolean(Properties.Settings.Default[setting]);
+        }
+
+        public static void WriteString(string setting, string value)
 		{
-			Configuration config = ConfigurationManager.OpenExeConfiguration(Assembly.GetEntryAssembly().Location);
+            Properties.Settings.Default[setting] = value;
+            Properties.Settings.Default.Save();
+        }
 
-			config.AppSettings.Settings.Remove(setting);
-			config.AppSettings.Settings.Add(setting, value);
-
-			config.Save(ConfigurationSaveMode.Modified);
-		}
-	}
+        public static void WriteBool(string setting, bool value)
+        {
+            Properties.Settings.Default[setting] = value;
+            Properties.Settings.Default.Save();
+        }
+    }
 	
 	#endregion
 	
@@ -108,8 +116,10 @@ namespace GENESYSLauncher
 			public string EXEName { get; set; }
 			public string CommandLine { get; set; }
 			public GameType Type { get; set; }
-			
-			public Game()
+            public string Info { get; set; }
+            public string Image { get; set; }
+
+            public Game()
     		{
 				Type = GameType.None;
 			}
@@ -119,47 +129,146 @@ namespace GENESYSLauncher
 				switch (Type)
       			{
           			case GameType.HL2S:
-              		Name = "Half-Life 2 Survivor Ver2.0";
+              		Name = "Half-Life 2 Survivor";
 					EXEName = "hl2.exe";
-					CommandLine = "-sw -game hl2mp -heapsize 512000 -width 1360 -height 768 -windowed " + (Convert.ToBoolean(Settings.ReadVal("HL2S_ArcadeMenu_Toggle")) ? " -ac" : "") + " -io 0 -nesys 0 " + Settings.ReadVal("HL2S_LaunchOptions");
-              		break;
+					CommandLine = "-sw -game hl2mp -heapsize 512000 -width 1360 -height 768 -windowed " + (Settings.ReadBool("HL2S_ArcadeMenu_Toggle") ? " -ac" : "") + " -io 0 -nesys 0 " + Settings.ReadString("HL2S_LaunchOptions");
+                    Info = @"This game runs at a 1360x788 resolution.
+If you have a larger monitor resolution, you might need to change your monitor resolution in order to fit this game on your screen properly.
+Game Instructions:
+To start the game, press F3 2 times on your keyboard.
+To navigate the interface, use the arrow keys to move around the interface, and press F2 to select an option.
+To exit the game, type 'exit' into the Debug Console window.";
+                    Image = "HL2AC_Large";
+                    break;
               		
           			case GameType.CyberDiver:
               		Name = "Cyber Diver";
 					EXEName = "hl2.exe";
-					CommandLine = "-sw -game bs09 -heapsize 1024000 -width 1360 -height 768 -noborder -windowed -ac -io 0 -nesys 0 " + Settings.ReadVal("CyberDiver_LaunchOptions");
-              		break;
+					CommandLine = "-sw -game bs09 -heapsize 1024000 -width 1360 -height 768 -noborder -windowed -ac -io 0 -nesys 0 " + Settings.ReadString("CyberDiver_LaunchOptions");
+                    Info = @"This game runs at a 1360x788 resolution.
+If you have a larger monitor resolution, you might need to change your monitor resolution in order to fit this game on your screen properly.
+Game Instructions:
+To start the game, press F3 2 times on your keyboard.
+To navigate the interface, use the arrow keys to move around the interface, and press F2 to select an option.
+To exit the game, close the game window.";
+                    Image = "CD_Large";
+                    break;
               		
               		case GameType.L4DS:
               		Name = "Left 4 Dead Survivors";
 					EXEName = "left4dead2.exe";
-					CommandLine ="-arcadeIO_InitializeSkip -game left4dead2 -language japanese -noborder -windowed " + Settings.ReadVal("L4DS_LaunchOptions");
-              		break;
+					CommandLine ="-arcadeIO_InitializeSkip -game left4dead2 -language japanese -noborder -windowed " + Settings.ReadString("L4DS_LaunchOptions");
+                    Info = @"This game runs at a 1920x1080 resolution by default, but it can be changed with the -w and h launch options.
+Game Instructions:
+Left 4 Dead Survivors uses an interface that supports Mouse and Keyboard.
+To exit the game, close the game window.
+Customization Instructions:
+To customize your character, use the '-console' launch option, then type the command 'customAvatar_controller' into the console and hit Enter/Return. 
+After customizing your character, press 'Reload' then 'Start' to get into the game.";
+                    Image = "L4DS_Large";
+                    break;
               		
           			default:
               		Name = "";
 					EXEName = "";
 					CommandLine = "";
+                    Info = "";
+                    Image = "";
               		break;
       			}
 			}
-		}
-		
-		public static bool LaunchGame(GameType gameToLaunch)
+
+            public string GetGamePath()
+            {
+                return GlobalVars.GamePath + "\\" + Name + "\\" + EXEName;
+            }
+
+            public bool ValidateGamePath()
+            {
+                return File.Exists(GetGamePath());
+            }
+        }
+
+        public static Game CreateGame(GameType gameToLaunch)
+        {
+            var gameClass = new Game();
+            gameClass.Type = gameToLaunch;
+            gameClass.GetGameFromGameType();
+            return gameClass;
+        }
+
+        public static void ShowGameInfo(GameType gameType)
+        {
+            var game = CreateGame(gameType);
+            MessageBox.Show(game.Info, game.Name + " Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public static void LaunchGame(GameType gameToLaunch, Discord.Discord discord)
 		{
-			var gameClass = new Game();
-			gameClass.Type = gameToLaunch;
-			gameClass.GetGameFromGameType();
-			string processPath = GlobalVars.GamePath + "\\" + gameClass.Name + "\\";
-			
-			var processInfo = new ProcessStartInfo();
-			processInfo.WorkingDirectory = Path.GetDirectoryName(processPath);
-			processInfo.FileName = gameClass.EXEName;
-			processInfo.Arguments = gameClass.CommandLine;
-			var proc = Process.Start(processInfo);
-			
-			return Convert.ToBoolean(Settings.ReadVal("CloseWhenGameLaunches"));
+            var gameClass = CreateGame(gameToLaunch);
+
+            if (gameClass.ValidateGamePath())
+            {
+                var processInfo = new ProcessStartInfo();
+                processInfo.WorkingDirectory = Path.GetDirectoryName(gameClass.GetGamePath());
+                processInfo.FileName = gameClass.EXEName;
+                processInfo.Arguments = gameClass.CommandLine;
+                var proc = Process.Start(processInfo);
+
+                if (File.Exists(GlobalVars.DiscordDllPath))
+                {
+                    discord = new Discord.Discord(Properties.Settings.Default.DiscordAppID, (System.UInt64)Discord.CreateFlags.Default);
+                    var activityManager = discord.GetActivityManager();
+                    activityManager.UpdateActivity(Launcher.UpdateRichPresense(gameClass.Type), (res) =>
+                    {
+                        if (res == Discord.Result.Ok)
+                        {
+                            Debug.WriteLine("DISCORD: Everything is fine!");
+                        }
+                    });
+                }
+            }
 		}
+
+        public static long UnixTimeNow()
+        {
+            var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
+            return (long)timeSpan.TotalSeconds;
+        }
+
+        public static Discord.Activity UpdateRichPresense(GameType gameToLaunch)
+        {
+            var gameClass = CreateGame(gameToLaunch);
+
+            var activityTimestamp = new Discord.ActivityTimestamps();
+            activityTimestamp.Start = UnixTimeNow();
+
+            var activityAssets = new Discord.ActivityAssets();
+            activityAssets.LargeImage = gameClass.Image;
+            activityAssets.LargeText = gameClass.Name;
+
+            switch (gameClass.Type)
+            {
+                case GameType.HL2S:
+                case GameType.CyberDiver:
+                case GameType.L4DS:
+                    return new Discord.Activity
+                    {
+                        State = "Idle",
+                        Details = gameClass.Name + ": In Game",
+                        Timestamps = activityTimestamp,
+                    };
+                case GameType.None:
+                default:
+                    return new Discord.Activity
+                    {
+                        State = "Idle",
+                        Details = "In Launcher",
+                        Timestamps = activityTimestamp,
+                    };
+            }
+        }
+
 	}
 	
 	#endregion
@@ -280,7 +389,8 @@ namespace GENESYSLauncher
 	public static class GlobalVars
 	{
 		public static string RootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-		public static string GamePath = RootPath + "\\games";
+        public static string DiscordDllPath = RootPath + "\\" + Discord.Constants.DllName + ".dll";
+        public static string GamePath = RootPath + "\\games";
 	}
 	
 	#endregion

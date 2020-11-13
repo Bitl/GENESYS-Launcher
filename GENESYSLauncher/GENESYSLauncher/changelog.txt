@@ -6,4 +6,4 @@ v2.0:
 - Added Discord integration. (WIP)
 	- As a result, you can only hide the launcher upon loading a game.
 
-TODO: complete discord integration
+TODO: complete discord integration (go back to RPC?)

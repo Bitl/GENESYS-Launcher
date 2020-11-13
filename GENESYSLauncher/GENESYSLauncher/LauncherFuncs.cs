@@ -173,7 +173,7 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
 					EXEName = "";
 					CommandLine = "";
                     Info = "";
-                    Image = "";
+                    Image = "CD_Large";
               		break;
       			}
 			}
@@ -217,13 +217,17 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
 
                 if (File.Exists(GlobalVars.DiscordDllPath))
                 {
-                    discord = new Discord.Discord(Properties.Settings.Default.DiscordAppID, (System.UInt64)Discord.CreateFlags.Default);
+                    discord.RunCallbacks();
                     var activityManager = discord.GetActivityManager();
                     activityManager.UpdateActivity(Launcher.UpdateRichPresense(gameClass.Type), (res) =>
                     {
                         if (res == Discord.Result.Ok)
                         {
-                            Debug.WriteLine("DISCORD: Everything is fine!");
+                            Console.WriteLine("DISCORD: Everything is fine!");
+                        }
+                        else if (res == Discord.Result.ServiceUnavailable)
+                        {
+                            Console.WriteLine("DISCORD: Error when connecting!");
                         }
                     });
                 }

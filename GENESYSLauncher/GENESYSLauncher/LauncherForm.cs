@@ -66,17 +66,28 @@ namespace GENESYSLauncher
 			// Discord Functionality
 			if (File.Exists(GlobalVars.DiscordDllPath))
 			{
+				Console.WriteLine("DISCORD: Loaded!");
 				discord = new Discord.Discord(Properties.Settings.Default.DiscordAppID, (System.UInt64)Discord.CreateFlags.Default);
+				discord.RunCallbacks();
 				var activityManager = discord.GetActivityManager();
 				activityManager.UpdateActivity(Launcher.UpdateRichPresense(Launcher.GameType.None), (res) =>
 				{
 					if (res == Discord.Result.Ok)
 					{
-						Debug.WriteLine("DISCORD: Everything is fine!");
+						Console.WriteLine("DISCORD: Everything is fine!");
+					}
+					else if (res == Discord.Result.ServiceUnavailable)
+					{
+						Console.WriteLine("DISCORD: Error when connecting!");
 					}
 				});
 			}
 		}
+
+		void MainFormClosing(object sender, FormClosingEventArgs e)
+        {
+			discord.Dispose();
+        }
 
 		//close launcher on launch
 		void CheckBox5CheckedChanged(object sender, EventArgs e)

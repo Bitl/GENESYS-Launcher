@@ -115,7 +115,7 @@ namespace GENESYSLauncher.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("776556647455391766")]
         public long DiscordAppID {
             get {
                 return ((long)(this["DiscordAppID"]));

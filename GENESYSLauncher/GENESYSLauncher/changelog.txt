@@ -5,3 +5,5 @@ v2.0:
 - You can now view information about a game by pressing the "GAME INFORMATION" button.
 - Added Discord integration. (WIP)
 	- As a result, you can only hide the launcher upon loading a game.
+
+TODO: complete discord integration

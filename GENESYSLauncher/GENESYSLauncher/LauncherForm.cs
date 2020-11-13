@@ -118,12 +118,28 @@ namespace GENESYSLauncher
 			Settings.WriteBool("CloseWhenGameLaunches", checkBox5.Checked);
 		}
 
+		void TabControl1IndexChanged(object sender, EventArgs e)
+		{
+            if (tabControl1.SelectedTab == tabPage1)
+            {
+				pictureBox1.Image = imageList3.Images[0];
+            }
+			else if (tabControl1.SelectedTab == tabPage2)
+			{
+				pictureBox1.Image = imageList3.Images[1];
+			}
+			else if (tabControl1.SelectedTab == tabPage3)
+			{
+				pictureBox1.Image = imageList3.Images[2];
+			}
+		}
+
 		#endregion
 
 		#region HL2 Survivor
 
-		//hl2 survivor launch options
-		void TextBox4TextChanged(object sender, EventArgs e)
+			//hl2 survivor launch options
+			void TextBox4TextChanged(object sender, EventArgs e)
 		{
 			Settings.WriteString("HL2S_LaunchOptions", textBox4.Text);
 		}
@@ -233,7 +249,7 @@ namespace GENESYSLauncher
 		}
         #endregion
 
-        #region General
+        #region General/Debug
 
         void Button8Click(object sender, EventArgs e)
         {

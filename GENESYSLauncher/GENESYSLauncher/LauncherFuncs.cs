@@ -262,6 +262,7 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
                         Details = gameClass.Name,
                         Timestamps = activityTimestamp,
                         Assets = activityAssets,
+                        Instance = true,
                     };
                 case GameType.None:
                 default:
@@ -271,7 +272,8 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
                         Details = "In Launcher",
                         Timestamps = activityTimestamp,
                         Assets = activityAssets,
-        };
+                        Instance = true,
+                    };
             }
         }
 

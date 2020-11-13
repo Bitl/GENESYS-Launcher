@@ -68,6 +68,10 @@ namespace GENESYSLauncher
 			{
 				Console.WriteLine("DISCORD: Loaded!");
 				discord = new Discord.Discord(Properties.Settings.Default.DiscordAppID, (System.UInt64)Discord.CreateFlags.Default);
+				discord.SetLogHook(Discord.LogLevel.Debug, (level, message) =>
+				{
+					Console.WriteLine("Log[{0}] {1}", level, message);
+				});
 				discord.RunCallbacks();
 				var activityManager = discord.GetActivityManager();
 				activityManager.UpdateActivity(Launcher.UpdateRichPresense(Launcher.GameType.None), (res) =>

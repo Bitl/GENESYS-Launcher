@@ -258,8 +258,8 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
                 case GameType.L4DS:
                     return new Discord.Activity
                     {
-                        State = "Idle",
-                        Details = gameClass.Name + ": In Game",
+                        State = "In Game",
+                        Details = gameClass.Name,
                         Timestamps = activityTimestamp,
                         Assets = activityAssets,
                     };
@@ -267,7 +267,7 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
                 default:
                     return new Discord.Activity
                     {
-                        State = "Idle",
+                        State = "",
                         Details = "In Launcher",
                         Timestamps = activityTimestamp,
                         Assets = activityAssets,

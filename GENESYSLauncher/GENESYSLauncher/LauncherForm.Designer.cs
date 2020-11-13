@@ -62,11 +62,12 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.button5 = new System.Windows.Forms.Button();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.button7 = new System.Windows.Forms.Button();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button6 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -95,8 +96,8 @@
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
-            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.imageList3 = new System.Windows.Forms.ImageList(this.components);
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -126,7 +127,7 @@
             this.tabPage3.ImageKey = "l4ds_discord.png";
             this.tabPage3.Location = new System.Drawing.Point(4, 23);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(300, 253);
+            this.tabPage3.Size = new System.Drawing.Size(300, 278);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
@@ -141,13 +142,12 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // imageList1
+            // imageList2
             // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "cd_discord.png");
-            this.imageList1.Images.SetKeyName(1, "hl2s_discord.png");
-            this.imageList1.Images.SetKeyName(2, "l4ds_discord.png");
+            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
+            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList2.Images.SetKeyName(0, "info.png");
+            this.imageList2.Images.SetKeyName(1, "play.png");
             // 
             // button7
             // 
@@ -188,6 +188,14 @@
             this.textBox6.TabIndex = 13;
             this.textBox6.TextChanged += new System.EventHandler(this.TextBox6TextChanged);
             // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "cd_discord.png");
+            this.imageList1.Images.SetKeyName(1, "hl2s_discord.png");
+            this.imageList1.Images.SetKeyName(2, "l4ds_discord.png");
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.button6);
@@ -197,7 +205,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 23);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(300, 253);
+            this.tabPage2.Size = new System.Drawing.Size(300, 278);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
@@ -382,7 +390,7 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.ImageList = this.imageList1;
-            this.tabControl1.Location = new System.Drawing.Point(6, 183);
+            this.tabControl1.Location = new System.Drawing.Point(7, 225);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -393,7 +401,7 @@
             // 
             // checkBox5
             // 
-            this.checkBox5.Location = new System.Drawing.Point(154, 469);
+            this.checkBox5.Location = new System.Drawing.Point(150, 178);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(155, 23);
             this.checkBox5.TabIndex = 2;
@@ -403,7 +411,7 @@
             // 
             // label20
             // 
-            this.label20.Location = new System.Drawing.Point(8, 473);
+            this.label20.Location = new System.Drawing.Point(8, 195);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(45, 14);
             this.label20.TabIndex = 3;
@@ -412,7 +420,7 @@
             // 
             // label21
             // 
-            this.label21.Location = new System.Drawing.Point(48, 473);
+            this.label21.Location = new System.Drawing.Point(48, 195);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(96, 14);
             this.label21.TabIndex = 4;
@@ -421,14 +429,14 @@
             // label22
             // 
             this.label22.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label22.Location = new System.Drawing.Point(45, 471);
+            this.label22.Location = new System.Drawing.Point(45, 195);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(2, 18);
             this.label22.TabIndex = 5;
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(196, 498);
+            this.button8.Location = new System.Drawing.Point(198, 511);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(114, 19);
             this.button8.TabIndex = 6;
@@ -439,7 +447,7 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(49, 498);
+            this.button9.Location = new System.Drawing.Point(51, 511);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(41, 19);
             this.button9.TabIndex = 7;
@@ -450,7 +458,7 @@
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(96, 498);
+            this.button10.Location = new System.Drawing.Point(98, 511);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(50, 19);
             this.button10.TabIndex = 8;
@@ -461,7 +469,7 @@
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(152, 498);
+            this.button11.Location = new System.Drawing.Point(154, 511);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(38, 19);
             this.button11.TabIndex = 9;
@@ -472,7 +480,7 @@
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(4, 498);
+            this.button12.Location = new System.Drawing.Point(6, 511);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(39, 19);
             this.button12.TabIndex = 10;
@@ -480,13 +488,6 @@
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Visible = false;
             this.button12.Click += new System.EventHandler(this.button12_Click);
-            // 
-            // imageList2
-            // 
-            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
-            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList2.Images.SetKeyName(0, "info.png");
-            this.imageList2.Images.SetKeyName(1, "play.png");
             // 
             // imageList3
             // 
@@ -496,12 +497,23 @@
             this.imageList3.Images.SetKeyName(1, "cd.png");
             this.imageList3.Images.SetKeyName(2, "l4ds.png");
             // 
+            // checkBox3
+            // 
+            this.checkBox3.Location = new System.Drawing.Point(150, 201);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(155, 18);
+            this.checkBox3.TabIndex = 11;
+            this.checkBox3.Text = "Discord Integration (restart)";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            // 
             // LauncherForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(322, 521);
+            this.ClientSize = new System.Drawing.Size(325, 542);
+            this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.button12);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.button10);
@@ -547,5 +559,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ImageList imageList2;
         private System.Windows.Forms.ImageList imageList3;
+        private System.Windows.Forms.CheckBox checkBox3;
     }
 }

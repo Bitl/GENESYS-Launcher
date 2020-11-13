@@ -25,19 +25,22 @@ namespace GENESYSLauncher.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("v2.0")]
-        public string Version {
+        [global::System.Configuration.DefaultSettingValueAttribute("2.0")]
+        public decimal Version {
             get {
-                return ((string)(this["Version"]));
+                return ((decimal)(this["Version"]));
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool CloseWhenGameLaunches {
             get {
                 return ((bool)(this["CloseWhenGameLaunches"]));
+            }
+            set {
+                this["CloseWhenGameLaunches"] = value;
             }
         }
         
@@ -119,6 +122,30 @@ namespace GENESYSLauncher.Properties {
         public long DiscordAppID {
             get {
                 return ((long)(this["DiscordAppID"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DiscordIntegration {
+            get {
+                return ((bool)(this["DiscordIntegration"]));
+            }
+            set {
+                this["DiscordIntegration"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LastSelectedTabIndex {
+            get {
+                return ((int)(this["LastSelectedTabIndex"]));
+            }
+            set {
+                this["LastSelectedTabIndex"] = value;
             }
         }
     }

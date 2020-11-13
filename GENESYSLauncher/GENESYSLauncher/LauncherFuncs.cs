@@ -178,14 +178,23 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
       			}
 			}
 
+            public string GetTechnicalName()
+            {
+                return Name.Replace(" ", "").Replace("-", "");
+            }
+
             public string GetGamePath()
             {
-                return GlobalVars.GamePath + "\\" + Name + "\\" + EXEName;
+                string returnVal = GlobalVars.GamePath + "\\" + Name + "\\" + EXEName;
+                Console.WriteLine(GetTechnicalName() + ".GetGamePath() returns " + returnVal);
+                return returnVal;
             }
 
             public bool ValidateGamePath()
             {
-                return File.Exists(GetGamePath());
+                bool returnVal = File.Exists(GetGamePath());
+                Console.WriteLine(GetTechnicalName() + ".ValidateGamePath() returns " + returnVal);
+                return returnVal;
             }
         }
 
@@ -203,12 +212,12 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
             MessageBox.Show(game.Info, game.Name + " Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        public static void UpdateActivity(Discord.Discord discord, GameType gameToLaunch)
+        public static void UpdateActivity(GameType gameToLaunch)
         {
-            if (File.Exists(GlobalVars.DiscordDllPath))
+            if (File.Exists(GlobalVars.DiscordDllPath) && Properties.Settings.Default.DiscordIntegration)
             {
                 var gameClass = CreateGame(gameToLaunch);
-                var activityManager = discord.GetActivityManager();
+                var activityManager = GlobalVars.discord.GetActivityManager();
 
                 string launcherState = "In Game";
                 string launcherDetails = gameClass.Name;
@@ -234,8 +243,8 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
 
                 activityManager.UpdateActivity(activity, result =>
                 {
-                    Console.WriteLine("DISCORD: Rich Presense for {0}", gameClass.Name);
-                    Console.WriteLine("DISCORD: Update Activity: {0}", result);
+                    Console.WriteLine("DISCORD: Rich Presense for " + gameClass.Name);
+                    Console.WriteLine("DISCORD: Update Activity: " + result);
                     if (result == Discord.Result.Ok)
                     {
                         Console.WriteLine("DISCORD: Everything is fine!");
@@ -248,26 +257,33 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
             }
         }
 
-        public static void LaunchGame(GameType gameToLaunch, Discord.Discord discord)
+        public static void LaunchGame(GameType gameToLaunch)
 		{
             var gameClass = CreateGame(gameToLaunch);
 
             if (gameClass.ValidateGamePath())
             {
-                UpdateActivity(discord, gameToLaunch);
+                UpdateActivity(gameToLaunch);
                 var processInfo = new ProcessStartInfo();
                 processInfo.WorkingDirectory = Path.GetDirectoryName(gameClass.GetGamePath());
                 processInfo.FileName = gameClass.EXEName;
                 processInfo.Arguments = gameClass.CommandLine;
                 //add event on process close
                 var proc = Process.Start(processInfo);
+                proc.EnableRaisingEvents = true;
+                proc.Exited += Proc_Exited;
             }
 		}
 
-        public static void LaunchGame_Debug(GameType gameToLaunch, Discord.Discord discord)
+        private static void Proc_Exited(object sender, EventArgs e)
+        {
+            UpdateActivity(GameType.None);
+        }
+
+        public static void LaunchGame_Debug(GameType gameToLaunch)
         {
             var gameClass = CreateGame(gameToLaunch);
-            UpdateActivity(discord, gameToLaunch);
+            UpdateActivity(gameToLaunch);
         }
 
         public static long UnixTimeNow()
@@ -397,6 +413,7 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
 		public static string RootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         public static string DiscordDllPath = RootPath + "\\" + Discord.Constants.DllName + ".dll";
         public static string GamePath = RootPath + "\\games";
+        public static Discord.Discord discord = null;
 	}
 	
 	#endregion

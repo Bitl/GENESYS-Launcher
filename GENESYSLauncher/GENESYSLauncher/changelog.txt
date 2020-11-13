@@ -1,9 +1,11 @@
 v2.0:
 - Redid the settings system to use Visual Studio's setting system.
 - Rewrote the code behind the scenes for better efficency.
+- Redesigned the launcher to be a little more modern.
+	- Tabs now have icons.
+	- When you change games, it will display the current game's logo.
 - The launcher will now detect which of the 3 games you have installed, and will remove necessary entries in the list.
 - You can now view information about a game by pressing the "GAME INFORMATION" button.
-- Added Discord integration. (WIP)
+- Added Discord integration.
+	- It can be disabled by toggling the "Discord Integration" checkbox.
 	- As a result, you can only hide the launcher upon loading a game.
-
-TODO: complete discord integration (go back to RPC?)

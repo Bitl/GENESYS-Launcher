@@ -11,9 +11,9 @@ namespace GENESYSLauncher
     #region LauncherForm
     public partial class LauncherForm : Form
     {
-		public Discord.Discord discord;
 		public Thread discordThread;
-		public bool continueDiscordThreadLoop;
+        public bool continueDiscordThreadLoop;
+		public bool init = true;
 
 		#region Constructor
 		public LauncherForm()
@@ -28,10 +28,12 @@ namespace GENESYSLauncher
         void MainFormLoad(object sender, EventArgs e)
 		{
 			#region core launcher settings
-			label20.Text = Settings.ReadString("Version");
+			label20.Text = "v" + Properties.Settings.Default.Version.ToString();
 			var versionInfo = FileVersionInfo.GetVersionInfo(Application.ExecutablePath);
-			label21.Text = Settings.ReadString("Version") + "." + versionInfo.ProductBuildPart.ToString() + "." + versionInfo.ProductPrivatePart.ToString();
+			label21.Text = label20.Text + "." + versionInfo.ProductBuildPart.ToString() + "." + versionInfo.ProductPrivatePart.ToString();
 			checkBox5.Checked = Settings.ReadBool("CloseWhenGameLaunches");
+			checkBox3.Checked = Settings.ReadBool("DiscordIntegration");
+			tabControl1.SelectedIndex = Properties.Settings.Default.LastSelectedTabIndex;
 			#endregion
 
 			#region hl2 survivor load settings
@@ -55,6 +57,8 @@ namespace GENESYSLauncher
 			button10.Visible = true;
 			button11.Visible = true;
 			button12.Visible = true;
+#else
+			tabControl1.Height = 305;
 #endif
 
 			//check for the games.
@@ -71,18 +75,21 @@ namespace GENESYSLauncher
 				Close();
 			}
 
+			switchImage();
+			init = false;
+
 			try
 			{
 				// Discord Functionality
-				if (File.Exists(GlobalVars.DiscordDllPath))
+				if (File.Exists(GlobalVars.DiscordDllPath) && Properties.Settings.Default.DiscordIntegration)
 				{
 					Console.WriteLine("DISCORD: Loaded!");
-					discord = new Discord.Discord(Properties.Settings.Default.DiscordAppID, (System.UInt64)Discord.CreateFlags.NoRequireDiscord);
-					discord.SetLogHook(Discord.LogLevel.Debug, (level, message) =>
+					GlobalVars.discord = new Discord.Discord(Properties.Settings.Default.DiscordAppID, (System.UInt64)Discord.CreateFlags.NoRequireDiscord);
+					GlobalVars.discord.SetLogHook(Discord.LogLevel.Debug, (level, message) =>
 					{
 						Console.WriteLine("Log[{0}] {1}", level, message);
 					});
-					Launcher.UpdateActivity(discord, Launcher.GameType.None);
+					Launcher.UpdateActivity(Launcher.GameType.None);
 
 					// Pump the event look to ensure all callbacks continue to get fired.
 					//https://stackoverflow.com/questions/17142842/infinite-while-loop-with-form-application-c-sharp
@@ -93,13 +100,13 @@ namespace GENESYSLauncher
 						{
 							while (continueDiscordThreadLoop)
 							{
-								discord.RunCallbacks();
+								GlobalVars.discord.RunCallbacks();
 								Thread.Sleep(1000 / 60);
 							}
 						}
 						finally
 						{
-							discord.Dispose();
+							GlobalVars.discord.Dispose();
 						}
 					});
 					discordThread.IsBackground = true;
@@ -118,12 +125,29 @@ namespace GENESYSLauncher
 			Settings.WriteBool("CloseWhenGameLaunches", checkBox5.Checked);
 		}
 
+		private void checkBox3_CheckedChanged(object sender, EventArgs e)
+		{
+			if (!init)
+			{
+				Settings.WriteBool("DiscordIntegration", checkBox3.Checked);
+				MessageBox.Show("The launcher will now restart to apply this setting.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+				Application.Restart();
+			}
+		}
+
 		void TabControl1IndexChanged(object sender, EventArgs e)
 		{
-            if (tabControl1.SelectedTab == tabPage1)
-            {
+			switchImage();
+			Properties.Settings.Default.LastSelectedTabIndex = tabControl1.SelectedIndex;
+			Properties.Settings.Default.Save();
+		}
+
+		void switchImage()
+        {
+			if (tabControl1.SelectedTab == tabPage1)
+			{
 				pictureBox1.Image = imageList3.Images[0];
-            }
+			}
 			else if (tabControl1.SelectedTab == tabPage2)
 			{
 				pictureBox1.Image = imageList3.Images[1];
@@ -138,8 +162,8 @@ namespace GENESYSLauncher
 
 		#region HL2 Survivor
 
-			//hl2 survivor launch options
-			void TextBox4TextChanged(object sender, EventArgs e)
+		//hl2 survivor launch options
+		void TextBox4TextChanged(object sender, EventArgs e)
 		{
 			Settings.WriteString("HL2S_LaunchOptions", textBox4.Text);
 		}
@@ -198,7 +222,7 @@ namespace GENESYSLauncher
 		//hl2 survivor launch button
 		void Button1Click(object sender, EventArgs e)
 		{
-			Launcher.LaunchGame(Launcher.GameType.HL2S, discord);
+			Launcher.LaunchGame(Launcher.GameType.HL2S);
 
 			if (Settings.ReadBool("CloseWhenGameLaunches"))
 			{
@@ -219,7 +243,7 @@ namespace GENESYSLauncher
 		//cyber diver launch
 		void Button6Click(object sender, EventArgs e)
 		{
-			Launcher.LaunchGame(Launcher.GameType.CyberDiver, discord);
+			Launcher.LaunchGame(Launcher.GameType.CyberDiver);
 
 			if (Settings.ReadBool("CloseWhenGameLaunches"))
 			{
@@ -240,7 +264,7 @@ namespace GENESYSLauncher
 		// l4d survivors launch
 		void Button7Click(object sender, EventArgs e)
 		{
-			Launcher.LaunchGame(Launcher.GameType.L4DS, discord);
+			Launcher.LaunchGame(Launcher.GameType.L4DS);
 
 			if (Settings.ReadBool("CloseWhenGameLaunches"))
 			{
@@ -282,23 +306,23 @@ namespace GENESYSLauncher
 
 		private void button9_Click(object sender, EventArgs e)
 		{
-			Launcher.LaunchGame_Debug(Launcher.GameType.CyberDiver, discord);
+			Launcher.LaunchGame_Debug(Launcher.GameType.CyberDiver);
 		}
 
 		private void button10_Click(object sender, EventArgs e)
 		{
-			Launcher.LaunchGame_Debug(Launcher.GameType.HL2S, discord);
+			Launcher.LaunchGame_Debug(Launcher.GameType.HL2S);
 		}
 
 		private void button11_Click(object sender, EventArgs e)
 		{
-			Launcher.LaunchGame_Debug(Launcher.GameType.L4DS, discord);
+			Launcher.LaunchGame_Debug(Launcher.GameType.L4DS);
 		}
 		private void button12_Click(object sender, EventArgs e)
 		{
-			Launcher.LaunchGame_Debug(Launcher.GameType.None, discord);
+			Launcher.LaunchGame_Debug(Launcher.GameType.None);
 		}
-		#endregion
-	}
+        #endregion
+    }
     #endregion
 }

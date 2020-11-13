@@ -146,7 +146,7 @@ namespace GENESYSLauncher
         {
 			if (tabControl1.SelectedTab == tabPage1)
 			{
-				pictureBox1.Image = imageList3.Images[0];
+                pictureBox1.Image = imageList3.Images[0];
 			}
 			else if (tabControl1.SelectedTab == tabPage2)
 			{

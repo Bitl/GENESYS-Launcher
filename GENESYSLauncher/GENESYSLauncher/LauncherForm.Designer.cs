@@ -111,6 +111,7 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pictureBox1.Location = new System.Drawing.Point(7, 12);
             this.pictureBox1.Name = "pictureBox1";
@@ -127,7 +128,7 @@
             this.tabPage3.ImageKey = "l4ds_discord.png";
             this.tabPage3.Location = new System.Drawing.Point(4, 23);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(300, 278);
+            this.tabPage3.Size = new System.Drawing.Size(300, 253);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
@@ -192,8 +193,8 @@
             // 
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "cd_discord.png");
-            this.imageList1.Images.SetKeyName(1, "hl2s_discord.png");
+            this.imageList1.Images.SetKeyName(0, "hl2s_discord.png");
+            this.imageList1.Images.SetKeyName(1, "cd_discord.png");
             this.imageList1.Images.SetKeyName(2, "l4ds_discord.png");
             // 
             // tabPage2
@@ -205,7 +206,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 23);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(300, 278);
+            this.tabPage2.Size = new System.Drawing.Size(300, 253);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
@@ -265,7 +266,7 @@
             this.tabPage1.Controls.Add(this.button2);
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.ImageIndex = 1;
+            this.tabPage1.ImageKey = "hl2s_discord.png";
             this.tabPage1.Location = new System.Drawing.Point(4, 23);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -369,7 +370,7 @@
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(6, 17);
+            this.label6.Location = new System.Drawing.Point(6, 16);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(188, 14);
             this.label6.TabIndex = 14;
@@ -378,7 +379,7 @@
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(7, 34);
+            this.textBox4.Location = new System.Drawing.Point(7, 33);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(187, 20);
             this.textBox4.TabIndex = 13;

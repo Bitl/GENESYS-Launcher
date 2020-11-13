@@ -583,7 +583,6 @@
             this.MaximizeBox = false;
             this.Name = "LauncherForm";
             this.Text = "GENESYS Launcher";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
             this.Load += new System.EventHandler(this.MainFormLoad);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage3.ResumeLayout(false);

@@ -261,6 +261,7 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
                         State = "Idle",
                         Details = gameClass.Name + ": In Game",
                         Timestamps = activityTimestamp,
+                        Assets = activityAssets,
                     };
                 case GameType.None:
                 default:
@@ -269,7 +270,8 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
                         State = "Idle",
                         Details = "In Launcher",
                         Timestamps = activityTimestamp,
-                    };
+                        Assets = activityAssets,
+        };
             }
         }
 

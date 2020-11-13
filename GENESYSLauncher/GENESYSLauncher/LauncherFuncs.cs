@@ -138,7 +138,7 @@ Game Instructions:
 To start the game, press F3 2 times on your keyboard.
 To navigate the interface, use the arrow keys to move around the interface, and press F2 to select an option.
 To exit the game, type 'exit' into the Debug Console window.";
-                    Image = "HL2AC_Large";
+                    Image = "hl2ac_large";
                     break;
               		
           			case GameType.CyberDiver:
@@ -151,7 +151,7 @@ Game Instructions:
 To start the game, press F3 2 times on your keyboard.
 To navigate the interface, use the arrow keys to move around the interface, and press F2 to select an option.
 To exit the game, close the game window.";
-                    Image = "CD_Large";
+                    Image = "cd_large";
                     break;
               		
               		case GameType.L4DS:
@@ -165,15 +165,15 @@ To exit the game, close the game window.
 Customization Instructions:
 To customize your character, use the '-console' launch option, then type the command 'customAvatar_controller' into the console and hit Enter/Return. 
 After customizing your character, press 'Reload' then 'Start' to get into the game.";
-                    Image = "L4DS_Large";
+                    Image = "l4ds_large";
                     break;
               		
           			default:
-              		Name = "";
+              		Name = "Launcher";
 					EXEName = "";
 					CommandLine = "";
                     Info = "";
-                    Image = "CD_Large";
+                    Image = "cd_large";
               		break;
       			}
 			}
@@ -203,80 +203,78 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
             MessageBox.Show(game.Info, game.Name + " Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        public static void UpdateActivity(Discord.Discord discord, GameType gameToLaunch)
+        {
+            if (File.Exists(GlobalVars.DiscordDllPath))
+            {
+                var gameClass = CreateGame(gameToLaunch);
+                var activityManager = discord.GetActivityManager();
+
+                string launcherState = "In Game";
+                string launcherDetails = gameClass.Name;
+                if (gameClass.Type == GameType.None)
+                {
+                    launcherState = "In Launcher";
+                    launcherDetails = "";
+                }
+
+                var activity = new Discord.Activity
+                {
+                    State = launcherState,
+                    Details = launcherDetails,
+                    Timestamps = {
+                        Start = UnixTimeNow()
+                    },
+                    Assets = {
+                        LargeImage = gameClass.Image,
+                        LargeText = gameClass.Name
+                    },
+                    Instance = true
+                };
+
+                activityManager.UpdateActivity(activity, result =>
+                {
+                    Console.WriteLine("DISCORD: Rich Presense for {0}", gameClass.Name);
+                    Console.WriteLine("DISCORD: Update Activity: {0}", result);
+                    if (result == Discord.Result.Ok)
+                    {
+                        Console.WriteLine("DISCORD: Everything is fine!");
+                    }
+                    else if (result == Discord.Result.InternalError)
+                    {
+                        Console.WriteLine("DISCORD: Error when connecting!");
+                    }
+                });
+            }
+        }
+
         public static void LaunchGame(GameType gameToLaunch, Discord.Discord discord)
 		{
             var gameClass = CreateGame(gameToLaunch);
 
             if (gameClass.ValidateGamePath())
             {
+                UpdateActivity(discord, gameToLaunch);
                 var processInfo = new ProcessStartInfo();
                 processInfo.WorkingDirectory = Path.GetDirectoryName(gameClass.GetGamePath());
                 processInfo.FileName = gameClass.EXEName;
                 processInfo.Arguments = gameClass.CommandLine;
+                //add event on process close
                 var proc = Process.Start(processInfo);
-
-                if (File.Exists(GlobalVars.DiscordDllPath))
-                {
-                    discord.RunCallbacks();
-                    var activityManager = discord.GetActivityManager();
-                    activityManager.UpdateActivity(Launcher.UpdateRichPresense(gameClass.Type), (res) =>
-                    {
-                        if (res == Discord.Result.Ok)
-                        {
-                            Console.WriteLine("DISCORD: Everything is fine!");
-                        }
-                        else if (res == Discord.Result.ServiceUnavailable)
-                        {
-                            Console.WriteLine("DISCORD: Error when connecting!");
-                        }
-                    });
-                }
             }
 		}
+
+        public static void LaunchGame_Debug(GameType gameToLaunch, Discord.Discord discord)
+        {
+            var gameClass = CreateGame(gameToLaunch);
+            UpdateActivity(discord, gameToLaunch);
+        }
 
         public static long UnixTimeNow()
         {
             var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
             return (long)timeSpan.TotalSeconds;
         }
-
-        public static Discord.Activity UpdateRichPresense(GameType gameToLaunch)
-        {
-            var gameClass = CreateGame(gameToLaunch);
-
-            var activityTimestamp = new Discord.ActivityTimestamps();
-            activityTimestamp.Start = UnixTimeNow();
-
-            var activityAssets = new Discord.ActivityAssets();
-            activityAssets.LargeImage = gameClass.Image;
-            activityAssets.LargeText = gameClass.Name;
-
-            switch (gameClass.Type)
-            {
-                case GameType.HL2S:
-                case GameType.CyberDiver:
-                case GameType.L4DS:
-                    return new Discord.Activity
-                    {
-                        State = "In Game",
-                        Details = gameClass.Name,
-                        Timestamps = activityTimestamp,
-                        Assets = activityAssets,
-                        Instance = true,
-                    };
-                case GameType.None:
-                default:
-                    return new Discord.Activity
-                    {
-                        State = "",
-                        Details = "In Launcher",
-                        Timestamps = activityTimestamp,
-                        Assets = activityAssets,
-                        Instance = true,
-                    };
-            }
-        }
-
 	}
 	
 	#endregion

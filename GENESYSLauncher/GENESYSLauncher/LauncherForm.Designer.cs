@@ -72,6 +72,7 @@
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.button7 = new System.Windows.Forms.Button();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
@@ -98,12 +99,15 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -186,6 +190,15 @@
             this.button7.TabIndex = 1;
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.Button7Click);
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "cd_discord.png");
+            this.imageList1.Images.SetKeyName(1, "hl2s_discord.png");
+            this.imageList1.Images.SetKeyName(2, "l4ds_discord.png");
+            this.imageList1.Images.SetKeyName(3, "play.png");
             // 
             // groupBox9
             // 
@@ -458,15 +471,6 @@
             this.tabControl1.Size = new System.Drawing.Size(509, 264);
             this.tabControl1.TabIndex = 1;
             // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "cd_discord.png");
-            this.imageList1.Images.SetKeyName(1, "hl2s_discord.png");
-            this.imageList1.Images.SetKeyName(2, "l4ds_discord.png");
-            this.imageList1.Images.SetKeyName(3, "play.png");
-            // 
             // checkBox5
             // 
             this.checkBox5.Location = new System.Drawing.Point(376, 71);
@@ -513,12 +517,60 @@
             this.button8.Visible = false;
             this.button8.Click += new System.EventHandler(this.Button8Click);
             // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(364, 12);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(41, 23);
+            this.button9.TabIndex = 7;
+            this.button9.Text = "CD";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Visible = false;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(411, 12);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(50, 23);
+            this.button10.TabIndex = 8;
+            this.button10.Text = "HL2";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Visible = false;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(467, 12);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(38, 23);
+            this.button11.TabIndex = 9;
+            this.button11.Text = "L4D";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Visible = false;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(319, 12);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(39, 23);
+            this.button12.TabIndex = 10;
+            this.button12.Text = "N/A";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Visible = false;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
             // LauncherForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(508, 375);
+            this.Controls.Add(this.button12);
+            this.Controls.Add(this.button11);
+            this.Controls.Add(this.button10);
+            this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.label21);
@@ -531,8 +583,8 @@
             this.MaximizeBox = false;
             this.Name = "LauncherForm";
             this.Text = "GENESYS Launcher";
-            this.Load += new System.EventHandler(this.MainFormLoad);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
+            this.Load += new System.EventHandler(this.MainFormLoad);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
@@ -560,5 +612,9 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button button12;
     }
 }

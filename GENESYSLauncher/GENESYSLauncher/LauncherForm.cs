@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 #endregion
 
@@ -11,6 +12,8 @@ namespace GENESYSLauncher
     public partial class LauncherForm : Form
     {
 		public Discord.Discord discord;
+		public Thread discordThread;
+		public bool continueDiscordThreadLoop;
 
 		#region Constructor
 		public LauncherForm()
@@ -48,7 +51,12 @@ namespace GENESYSLauncher
 
 #if DEBUG
 			button8.Visible = true;
-#else
+			button9.Visible = true;
+			button10.Visible = true;
+			button11.Visible = true;
+			button12.Visible = true;
+#endif
+
 			//check for the games.
 			bool hl2acAvailable = Launcher.CreateGame(Launcher.GameType.HL2S).ValidateGamePath();
 			if (!hl2acAvailable) { tabControl1.TabPages.Remove(tabPage1); }
@@ -58,39 +66,63 @@ namespace GENESYSLauncher
 			if (!l4dsAvailable) { tabControl1.TabPages.Remove(tabPage3); }
 
 			if (tabControl1.TabPages.Count <= 0)
-            {
+			{
 				MessageBox.Show("There are no GENESYS games installed. The launcher will now close.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 				Close();
-            }
-#endif
-			// Discord Functionality
-			if (File.Exists(GlobalVars.DiscordDllPath))
-			{
-				Console.WriteLine("DISCORD: Loaded!");
-				discord = new Discord.Discord(Properties.Settings.Default.DiscordAppID, (System.UInt64)Discord.CreateFlags.Default);
-				discord.SetLogHook(Discord.LogLevel.Debug, (level, message) =>
-				{
-					Console.WriteLine("Log[{0}] {1}", level, message);
-				});
-				discord.RunCallbacks();
-				var activityManager = discord.GetActivityManager();
-				activityManager.UpdateActivity(Launcher.UpdateRichPresense(Launcher.GameType.None), (res) =>
-				{
-					if (res == Discord.Result.Ok)
-					{
-						Console.WriteLine("DISCORD: Everything is fine!");
-					}
-					else if (res == Discord.Result.ServiceUnavailable)
-					{
-						Console.WriteLine("DISCORD: Error when connecting!");
-					}
-				});
 			}
+
+			try
+			{
+				// Discord Functionality
+				if (File.Exists(GlobalVars.DiscordDllPath))
+				{
+					Console.WriteLine("DISCORD: Loaded!");
+					discord = new Discord.Discord(Properties.Settings.Default.DiscordAppID, (System.UInt64)Discord.CreateFlags.NoRequireDiscord);
+					discord.SetLogHook(Discord.LogLevel.Debug, (level, message) =>
+					{
+						Console.WriteLine("Log[{0}] {1}", level, message);
+					});
+					Launcher.UpdateActivity(discord, Launcher.GameType.None);
+
+					// Pump the event look to ensure all callbacks continue to get fired.
+					//https://stackoverflow.com/questions/17142842/infinite-while-loop-with-form-application-c-sharp
+					continueDiscordThreadLoop = true;
+					new Thread(() =>
+					{
+						try
+						{
+							while (continueDiscordThreadLoop)
+							{
+								discord.RunCallbacks();
+							}
+						}
+						finally
+						{
+							discord.Dispose();
+						}
+					}).Start();
+				}
+			}
+			catch (Exception)
+            {
+
+            }
 		}
 
 		void MainFormClosing(object sender, FormClosingEventArgs e)
         {
-			discord.Dispose();
+			try
+			{
+				if (discord != null)
+				{
+					continueDiscordThreadLoop = false;
+					discord.Dispose();
+				}
+			}
+			catch (Exception)
+            {
+
+            }
         }
 
 		//close launcher on launch
@@ -244,7 +276,26 @@ namespace GENESYSLauncher
         {
 			Launcher.ShowGameInfo(Launcher.GameType.L4DS);
 		}
-        #endregion
-    }
+
+		private void button9_Click(object sender, EventArgs e)
+		{
+			Launcher.LaunchGame_Debug(Launcher.GameType.CyberDiver, discord);
+		}
+
+		private void button10_Click(object sender, EventArgs e)
+		{
+			Launcher.LaunchGame_Debug(Launcher.GameType.HL2S, discord);
+		}
+
+		private void button11_Click(object sender, EventArgs e)
+		{
+			Launcher.LaunchGame_Debug(Launcher.GameType.L4DS, discord);
+		}
+		private void button12_Click(object sender, EventArgs e)
+		{
+			Launcher.LaunchGame_Debug(Launcher.GameType.None, discord);
+		}
+		#endregion
+	}
     #endregion
 }

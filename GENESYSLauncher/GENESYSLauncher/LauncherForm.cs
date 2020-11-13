@@ -13,6 +13,7 @@ namespace GENESYSLauncher
     {
 		public Discord.Discord discord;
 		public Thread discordThread;
+		public bool continueDiscordThreadLoop;
 
 		#region Constructor
 		public LauncherForm()
@@ -85,13 +86,14 @@ namespace GENESYSLauncher
 
 					// Pump the event look to ensure all callbacks continue to get fired.
 					//https://stackoverflow.com/questions/17142842/infinite-while-loop-with-form-application-c-sharp
-					new Thread(() =>
+					continueDiscordThreadLoop = true;
+					discordThread = new Thread(() =>
 					{
 						try
 						{
-							while (true)
+							while (continueDiscordThreadLoop)
 							{
-                                discord.RunCallbacks();
+								discord.RunCallbacks();
 								Thread.Sleep(1000 / 60);
 							}
 						}
@@ -99,7 +101,9 @@ namespace GENESYSLauncher
 						{
 							discord.Dispose();
 						}
-					}).Start();
+					});
+					discordThread.IsBackground = true;
+					discordThread.Start();
 				}
 			}
 			catch (Exception)

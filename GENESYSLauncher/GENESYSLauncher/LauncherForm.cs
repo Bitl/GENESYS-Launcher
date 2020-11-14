@@ -223,11 +223,6 @@ namespace GENESYSLauncher
 		void Button1Click(object sender, EventArgs e)
 		{
 			Launcher.LaunchGame(Launcher.GameType.HL2S);
-
-			if (Settings.ReadBool("CloseWhenGameLaunches"))
-			{
-				Visible = false;
-			}
 		}
 
 		#endregion
@@ -244,11 +239,6 @@ namespace GENESYSLauncher
 		void Button6Click(object sender, EventArgs e)
 		{
 			Launcher.LaunchGame(Launcher.GameType.CyberDiver);
-
-			if (Settings.ReadBool("CloseWhenGameLaunches"))
-			{
-				Visible = false;
-			}
 		}
 
 		#endregion
@@ -265,11 +255,6 @@ namespace GENESYSLauncher
 		void Button7Click(object sender, EventArgs e)
 		{
 			Launcher.LaunchGame(Launcher.GameType.L4DS);
-
-			if (Settings.ReadBool("CloseWhenGameLaunches"))
-			{
-				Visible = false;
-			}
 		}
         #endregion
 

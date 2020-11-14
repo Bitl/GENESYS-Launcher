@@ -15,6 +15,7 @@ using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace GENESYSLauncher
 {
@@ -259,6 +260,25 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
 
         public static void LaunchGame(GameType gameToLaunch)
 		{
+            if (Settings.ReadBool("CloseWhenGameLaunches"))
+            {
+                foreach (Form form in Application.OpenForms)
+                {
+                    if (form.GetType() == typeof(LauncherForm))
+                    {
+                        if (form.Visible == true)
+                        {
+                            if (form.InvokeRequired)
+                            {
+                                form.Invoke(new MethodInvoker(delegate {
+                                    form.Visible = false;
+                                }));
+                            }
+                        }
+                    }
+                }
+            }
+
             var gameClass = CreateGame(gameToLaunch);
 
             if (gameClass.ValidateGamePath())
@@ -277,6 +297,25 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
 
         private static void Proc_Exited(object sender, EventArgs e)
         {
+            if (Settings.ReadBool("CloseWhenGameLaunches"))
+            {
+                foreach (Form form in Application.OpenForms)
+                {
+                    if (form.GetType() == typeof(LauncherForm))
+                    {
+                        if (form.Visible == false)
+                        {
+                            if (form.InvokeRequired)
+                            {
+                                form.Invoke(new MethodInvoker(delegate {
+                                    form.Visible = true;
+                                }));
+                            }
+                        }
+                    }
+                }
+            }
+
             UpdateActivity(GameType.None);
         }
 

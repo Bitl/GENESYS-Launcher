@@ -215,7 +215,7 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
 
         public static void UpdateActivity(GameType gameToLaunch)
         {
-            if (File.Exists(GlobalVars.DiscordDllPath) && Properties.Settings.Default.DiscordIntegration)
+            if (File.Exists(GlobalVars.DiscordDllPath) && Properties.Settings.Default.DiscordIntegration && GlobalVars.discord != null)
             {
                 var gameClass = CreateGame(gameToLaunch);
                 var activityManager = GlobalVars.discord.GetActivityManager();

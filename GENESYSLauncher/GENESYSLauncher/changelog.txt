@@ -9,3 +9,6 @@ v2.0:
 - Added Discord integration.
 	- It can be disabled by toggling the "Discord Integration" checkbox.
 	- As a result, you can only hide the launcher upon loading a game.
+- The launch options for each game can now be directly edited in the launcher.
+v1.0:
+- Original release

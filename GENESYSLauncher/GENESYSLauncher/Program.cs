@@ -24,7 +24,30 @@ namespace GENESYSLauncher
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new LauncherForm());
+
+			if (args.Length == 0)
+			{
+				Application.Run(new LauncherForm());
+			}
+			else
+            {
+				CommandLineArguments.Arguments CommandLine = new CommandLineArguments.Arguments(args);
+
+				if (CommandLine["hl2ac"] != null)
+                {
+					Launcher.LaunchGame(Launcher.GameType.HL2S);
+                }
+				else if (CommandLine["cd"] != null)
+				{
+					Launcher.LaunchGame(Launcher.GameType.CyberDiver);
+				}
+				else if (CommandLine["l4ds"] != null)
+				{
+					Launcher.LaunchGame(Launcher.GameType.L4DS);
+				}
+
+				Application.Exit();
+			}
 		}
 		
 	}

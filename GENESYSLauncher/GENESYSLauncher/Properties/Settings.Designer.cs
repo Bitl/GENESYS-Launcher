@@ -46,7 +46,8 @@ namespace GENESYSLauncher.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("-sw -game hl2mp -heapsize 512000 -width 1360 -height 768 -windowed -language japa" +
+            "nese -ac -io 0 -nesys 0")]
         public string HL2S_LaunchOptions {
             get {
                 return ((string)(this["HL2S_LaunchOptions"]));
@@ -82,7 +83,8 @@ namespace GENESYSLauncher.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("-sw -game bs09 -heapsize 1024000 -width 1360 -height 768 -noborder -windowed -io " +
+            "0 -nesys 0 -language japanese -ac")]
         public string CyberDiver_LaunchOptions {
             get {
                 return ((string)(this["CyberDiver_LaunchOptions"]));
@@ -94,7 +96,7 @@ namespace GENESYSLauncher.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("-arcadeIO_InitializeSkip -game left4dead2 -language japanese -noborder -windowed")]
         public string L4DS_LaunchOptions {
             get {
                 return ((string)(this["L4DS_LaunchOptions"]));

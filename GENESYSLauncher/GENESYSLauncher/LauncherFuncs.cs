@@ -16,6 +16,7 @@ using System.Security.Principal;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Linq;
+using System.Windows.Threading;
 
 namespace GENESYSLauncher
 {
@@ -132,7 +133,7 @@ namespace GENESYSLauncher
           			case GameType.HL2S:
               		Name = "Half-Life 2 Survivor";
 					EXEName = "hl2.exe";
-					CommandLine = "-sw -game hl2mp -heapsize 512000 -width 1360 -height 768 -windowed " + (Settings.ReadBool("HL2S_ArcadeMenu_Toggle") ? " -ac" : "") + " -io 0 -nesys 0 " + Settings.ReadString("HL2S_LaunchOptions");
+					CommandLine = Settings.ReadString("HL2S_LaunchOptions");
                     Info = @"This game runs at a 1360x788 resolution.
 If you have a larger monitor resolution, you might need to change your monitor resolution in order to fit this game on your screen properly.
 Game Instructions:
@@ -145,7 +146,7 @@ To exit the game, type 'exit' into the Debug Console window.";
           			case GameType.CyberDiver:
               		Name = "Cyber Diver";
 					EXEName = "hl2.exe";
-					CommandLine = "-sw -game bs09 -heapsize 1024000 -width 1360 -height 768 -noborder -windowed -ac -io 0 -nesys 0 " + Settings.ReadString("CyberDiver_LaunchOptions");
+					CommandLine = Settings.ReadString("CyberDiver_LaunchOptions");
                     Info = @"This game runs at a 1360x788 resolution.
 If you have a larger monitor resolution, you might need to change your monitor resolution in order to fit this game on your screen properly.
 Game Instructions:
@@ -158,7 +159,7 @@ To exit the game, close the game window.";
               		case GameType.L4DS:
               		Name = "Left 4 Dead Survivors";
 					EXEName = "left4dead2.exe";
-					CommandLine ="-arcadeIO_InitializeSkip -game left4dead2 -language japanese -noborder -windowed " + Settings.ReadString("L4DS_LaunchOptions");
+					CommandLine = Settings.ReadString("L4DS_LaunchOptions");
                     Info = @"This game runs at a 1920x1080 resolution by default, but it can be changed with the -w and h launch options.
 Game Instructions:
 Left 4 Dead Survivors uses an interface that supports Mouse and Keyboard.
@@ -215,46 +216,54 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
 
         public static void UpdateActivity(GameType gameToLaunch)
         {
-            if (File.Exists(GlobalVars.DiscordDllPath) && Properties.Settings.Default.DiscordIntegration && GlobalVars.discord != null)
+            try
             {
-                var gameClass = CreateGame(gameToLaunch);
-                var activityManager = GlobalVars.discord.GetActivityManager();
-
-                string launcherState = "In Game";
-                string launcherDetails = gameClass.Name;
-                if (gameClass.Type == GameType.None)
+                if (File.Exists(GlobalVars.DiscordDllPath) && Properties.Settings.Default.DiscordIntegration && GlobalVars.discord != null && !GlobalVars.isConsole)
                 {
-                    launcherState = "In Launcher";
-                    launcherDetails = "";
-                }
+                    var gameClass = CreateGame(gameToLaunch);
+                    var dispatcher = Dispatcher.CurrentDispatcher;
+                    var activityManager = GlobalVars.discord.GetActivityManager();
 
-                var activity = new Discord.Activity
-                {
-                    State = launcherState,
-                    Details = launcherDetails,
-                    Timestamps = {
+                    string launcherState = "In Game";
+                    string launcherDetails = gameClass.Name;
+                    if (gameClass.Type == GameType.None)
+                    {
+                        launcherState = "In Launcher";
+                        launcherDetails = "";
+                    }
+
+                    var activity = new Discord.Activity
+                    {
+                        State = launcherState,
+                        Details = launcherDetails,
+                        Timestamps = {
                         Start = UnixTimeNow()
                     },
-                    Assets = {
+                        Assets = {
                         LargeImage = gameClass.Image,
                         LargeText = gameClass.Name
                     },
-                    Instance = true
-                };
+                        Instance = true
+                    };
 
-                activityManager.UpdateActivity(activity, result =>
-                {
-                    Console.WriteLine("DISCORD: Rich Presense for " + gameClass.Name);
-                    Console.WriteLine("DISCORD: Update Activity: " + result);
-                    if (result == Discord.Result.Ok)
+                    activityManager.UpdateActivity(activity, result =>
                     {
-                        Console.WriteLine("DISCORD: Everything is fine!");
-                    }
-                    else if (result == Discord.Result.InternalError)
-                    {
-                        Console.WriteLine("DISCORD: Error when connecting!");
-                    }
-                });
+                        Console.WriteLine("DISCORD: Rich Presense for " + gameClass.Name);
+                        Console.WriteLine("DISCORD: Update Activity: " + result);
+                        if (result == Discord.Result.Ok)
+                        {
+                            Console.WriteLine("DISCORD: Everything is fine!");
+                        }
+                        else if (result == Discord.Result.InternalError)
+                        {
+                            Console.WriteLine("DISCORD: Error when connecting!");
+                        }
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
             }
         }
 
@@ -453,6 +462,7 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
         public static string DiscordDllPath = RootPath + "\\" + Discord.Constants.DllName + ".dll";
         public static string GamePath = RootPath + "\\games";
         public static Discord.Discord discord = null;
+        public static bool isConsole = true;
 	}
 	
 	#endregion

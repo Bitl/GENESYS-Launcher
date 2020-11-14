@@ -41,6 +41,21 @@ namespace GENESYSLauncher
 			checkBox1.Checked = Settings.ReadBool("HL2S_ArcadeMenu_Toggle");
 			checkBox2.Checked = Settings.ReadBool("HL2S_CustomNESYSHostIP_Toggle");
 			textBox5.Text = Settings.ReadString("HL2S_CustomNESYSHostIP");
+
+			if (checkBox1.Checked == false)
+			{
+				if (textBox4.Text.Contains(" -ac"))
+				{
+					textBox4.Text = textBox4.Text.Replace(" -ac", "");
+				}
+			}
+			else if (checkBox1.Checked == true)
+			{
+				if (!textBox4.Text.Contains(" -ac"))
+				{
+					textBox4.Text = textBox4.Text + " -ac";
+				}
+			}
 			#endregion
 
 			#region cyberdiver load settings
@@ -76,6 +91,7 @@ namespace GENESYSLauncher
 			}
 
 			switchImage();
+			GlobalVars.isConsole = false;
 			init = false;
 
 			try
@@ -171,6 +187,21 @@ namespace GENESYSLauncher
 		//hl2 survivor arcade interface toggle
 		void CheckBox1CheckedChanged(object sender, EventArgs e)
 		{
+			if (checkBox1.Checked == false)
+            {
+				if (textBox4.Text.Contains(" -ac"))
+				{
+					textBox4.Text = textBox4.Text.Replace(" -ac", "");
+				}
+			}
+			else if (checkBox1.Checked == true)
+            {
+				if (!textBox4.Text.Contains(" -ac"))
+				{
+					textBox4.Text = textBox4.Text + " -ac";
+				}
+			}
+
 			Settings.WriteBool("HL2S_ArcadeMenu_Toggle", checkBox1.Checked);
 		}
 

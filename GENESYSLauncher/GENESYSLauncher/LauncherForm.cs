@@ -90,19 +90,33 @@ namespace GENESYSLauncher
 					tabControl1.TabPages.Remove(tabPage1);
 				}
 			}
-			bool cdAvailable = Launcher.CreateGame(Launcher.GameType.CyberDiver).ValidateGamePath();
-            if (!cdAvailable)
+
+			bool cdv1Available = Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_00).ValidateGamePath();
+            if (!cdv1Available)
             {
-                tabControl1.TabPages.Remove(tabPage2);
+				bool cdv12Available = Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_20j).ValidateGamePath();
+				if (!cdv12Available)
+				{
+					tabControl1.TabPages.Remove(tabPage2);
+				}
+				else
+				{
+					if (!Launcher.IsSteamAppInstalled(220) && !Launcher.IsSteamAppInstalled(380) && !Launcher.IsSteamAppInstalled(420))
+					{
+						MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_20j).Name, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+						tabControl1.TabPages.Remove(tabPage2);
+					}
+				}
             }
 			else
 			{
 				if (!Launcher.IsSteamAppInstalled(220) && !Launcher.IsSteamAppInstalled(380) && !Launcher.IsSteamAppInstalled(420))
 				{
-					MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver).Name, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_00).Name, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 					tabControl1.TabPages.Remove(tabPage2);
 				}
 			}
+
 			bool l4dsAvailable = Launcher.CreateGame(Launcher.GameType.L4DS).ValidateGamePath();
             if (!l4dsAvailable)
             {
@@ -303,8 +317,36 @@ namespace GENESYSLauncher
 		//cyber diver launch
 		void Button6Click(object sender, EventArgs e)
 		{
-			MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.CyberDiver); };
-			this.Invoke(mi);
+			bool cdv1Available = Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_00).ValidateGamePath();
+			bool cdv12Available = Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_20j).ValidateGamePath();
+
+			if (cdv1Available && cdv12Available)
+			{
+				var result = MessageBox.Show("The launcher detects that you have both versions of Cyber Diver available. Press yes to launch v1.20j, or press no to launch v1.00.", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+				if (result == DialogResult.Yes)
+				{
+					MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.CyberDiver_v1_20j); };
+					this.Invoke(mi);
+				}
+				else if (result == DialogResult.No)
+				{
+					MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.CyberDiver_v1_00); };
+					this.Invoke(mi);
+				}
+			}
+			else
+            {
+				if (cdv1Available)
+                {
+					MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.CyberDiver_v1_00); };
+					this.Invoke(mi);
+				}
+				else if (cdv12Available)
+                {
+					MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.CyberDiver_v1_20j); };
+					this.Invoke(mi);
+				}
+			}
 		}
 
 		#endregion
@@ -332,13 +374,16 @@ namespace GENESYSLauncher
 			var game = Launcher.CreateGame(Launcher.GameType.HL2S);
 			string processPath = game.GetGamePath() + " " + game.CommandLine + (game.ValidateGamePath() ? "" : " (Game unavailable: It cannot be found in the games directory.)");
 
-			var game2 = Launcher.CreateGame(Launcher.GameType.CyberDiver);
-			string processPath2 = game2.GetGamePath() + " " + game2.CommandLine + (game2.ValidateGamePath() ? "" : " (Game unavailable: It cannot be found in the games directory.)");
+			var game2 = Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_00);
+            string processPath2 = game2.GetGamePath() + " " + game2.CommandLine + (game2.ValidateGamePath() ? "" : " (Game unavailable: It cannot be found in the games directory.)");
+
+			var game21 = Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_20j);
+			string processPath21 = game2.GetGamePath() + " " + game2.CommandLine + (game2.ValidateGamePath() ? "" : " (Game unavailable: It cannot be found in the games directory.)");
 
 			var game3 = Launcher.CreateGame(Launcher.GameType.L4DS);
 			string processPath3 = game3.GetGamePath() + " " + game3.CommandLine + (game3.ValidateGamePath() ? "" : " (Game unavailable: It cannot be found in the games directory.)");
 
-			MessageBox.Show("HL2 Survivor: " + processPath + "\n\nCyber Diver: " + processPath2 + "\n\nL4D Survivors: " + processPath3);
+			MessageBox.Show("HL2 Survivor: " + processPath + "\n\nCyber Diver v1: " + processPath2 + "\n\nCyber Diver v1.2: " + processPath21 + "\n\nL4D Survivors: " + processPath3);
         }
 
 		private void button2_Click(object sender, EventArgs e)
@@ -348,7 +393,7 @@ namespace GENESYSLauncher
 
         private void button4_Click(object sender, EventArgs e)
         {
-			Launcher.ShowGameInfo(Launcher.GameType.CyberDiver);
+			Launcher.ShowGameInfo(Launcher.GameType.CyberDiver_v1_00);
 		}
 
         private void button5_Click(object sender, EventArgs e)
@@ -358,7 +403,7 @@ namespace GENESYSLauncher
 
 		private void button9_Click(object sender, EventArgs e)
 		{
-			Launcher.LaunchGame_Debug(Launcher.GameType.CyberDiver);
+			Launcher.LaunchGame_Debug(Launcher.GameType.CyberDiver_v1_00);
 		}
 
 		private void button10_Click(object sender, EventArgs e)

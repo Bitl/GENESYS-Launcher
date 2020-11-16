@@ -33,13 +33,17 @@ namespace GENESYSLauncher
             {
 				CommandLineArguments.Arguments CommandLine = new CommandLineArguments.Arguments(args);
 
-				if (CommandLine["hl2ac"] != null)
+                if (CommandLine["hl2ac"] != null)
                 {
-					Launcher.LaunchGame(Launcher.GameType.HL2S);
+                    Launcher.LaunchGame(Launcher.GameType.HL2S);
                 }
-				else if (CommandLine["cd"] != null)
+                else if (CommandLine["cdv100"] != null)
+                {
+                    Launcher.LaunchGame(Launcher.GameType.CyberDiver_v1_00);
+                }
+				else if (CommandLine["cdv120j"] != null)
 				{
-					Launcher.LaunchGame(Launcher.GameType.CyberDiver);
+					Launcher.LaunchGame(Launcher.GameType.CyberDiver_v1_20j);
 				}
 				else if (CommandLine["l4ds"] != null)
 				{

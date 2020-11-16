@@ -286,7 +286,8 @@ namespace GENESYSLauncher
 		//hl2 survivor launch button
 		void Button1Click(object sender, EventArgs e)
 		{
-			Launcher.LaunchGame(Launcher.GameType.HL2S);
+			MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.HL2S); };
+			this.Invoke(mi);
 		}
 
 		#endregion
@@ -302,7 +303,8 @@ namespace GENESYSLauncher
 		//cyber diver launch
 		void Button6Click(object sender, EventArgs e)
 		{
-			Launcher.LaunchGame(Launcher.GameType.CyberDiver);
+			MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.CyberDiver); };
+			this.Invoke(mi);
 		}
 
 		#endregion
@@ -318,7 +320,8 @@ namespace GENESYSLauncher
 		// l4d survivors launch
 		void Button7Click(object sender, EventArgs e)
 		{
-			Launcher.LaunchGame(Launcher.GameType.L4DS);
+			MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.L4DS); };
+			this.Invoke(mi);
 		}
         #endregion
 

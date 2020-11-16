@@ -17,6 +17,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Linq;
 using System.Windows.Threading;
+using System.Threading.Tasks;
 
 namespace GENESYSLauncher
 {
@@ -221,7 +222,6 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
                 if (File.Exists(GlobalVars.DiscordDllPath) && Properties.Settings.Default.DiscordIntegration && GlobalVars.discord != null && !GlobalVars.isConsole)
                 {
                     var gameClass = CreateGame(gameToLaunch);
-                    var dispatcher = Dispatcher.CurrentDispatcher;
                     var activityManager = GlobalVars.discord.GetActivityManager();
 
                     string launcherState = "In Game";

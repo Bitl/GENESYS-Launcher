@@ -10,5 +10,6 @@ v2.0:
 	- It can be disabled by toggling the "Discord Integration" checkbox.
 	- As a result, you can only hide the launcher upon loading a game.
 - The launch options for each game can now be directly edited in the launcher.
+- The launcher now validates which required games you have installed. The launcher will notify you if you do not own or have not yet installed a required game.
 v1.0:
 - Original release

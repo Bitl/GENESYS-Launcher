@@ -97,88 +97,88 @@ namespace GENESYSLauncher
             Properties.Settings.Default.Save();
         }
     }
-	
-	#endregion
-	
-	#region Launcher Class
-	
-	public static class Launcher
-	{
-		public enum GameType
-		{
-			None,
-			HL2S,
-			CyberDiver,
-			L4DS
-		}
-		
-		public class Game
-		{
-			public string Name { get; set; }
-			public string EXEName { get; set; }
-			public string CommandLine { get; set; }
-			public GameType Type { get; set; }
+
+    #endregion
+
+    #region Launcher Class
+
+    public static class Launcher
+    {
+        public enum GameType
+        {
+            None,
+            HL2S,
+            CyberDiver,
+            L4DS
+        }
+
+        public class Game
+        {
+            public string Name { get; set; }
+            public string EXEName { get; set; }
+            public string CommandLine { get; set; }
+            public GameType Type { get; set; }
             public string Info { get; set; }
             public string Image { get; set; }
 
             public Game()
-    		{
-				Type = GameType.None;
-			}
-			
-			public void GetGameFromGameType()
-			{
-				switch (Type)
-      			{
-          			case GameType.HL2S:
-              		Name = "Half-Life 2 Survivor";
-					EXEName = "hl2.exe";
-					CommandLine = Settings.ReadString("HL2S_LaunchOptions");
-                    Info = @"This game runs at a 1360x788 resolution.
+            {
+                Type = GameType.None;
+            }
+
+            public void GetGameFromGameType()
+            {
+                switch (Type)
+                {
+                    case GameType.HL2S:
+                        Name = "Half-Life 2 Survivor";
+                        EXEName = "hl2.exe";
+                        CommandLine = Settings.ReadString("HL2S_LaunchOptions");
+                        Info = @"This game runs at a 1360x788 resolution.
 If you have a larger monitor resolution, you might need to change your monitor resolution in order to fit this game on your screen properly.
 Game Instructions:
 To start the game, press F3 2 times on your keyboard.
 To navigate the interface, use the arrow keys to move around the interface, and press F2 to select an option.
 To exit the game, type 'exit' into the Debug Console window.";
-                    Image = "hl2ac_large";
-                    break;
-              		
-          			case GameType.CyberDiver:
-              		Name = "Cyber Diver";
-					EXEName = "hl2.exe";
-					CommandLine = Settings.ReadString("CyberDiver_LaunchOptions");
-                    Info = @"This game runs at a 1360x788 resolution.
+                        Image = "hl2ac_large";
+                        break;
+
+                    case GameType.CyberDiver:
+                        Name = "Cyber Diver";
+                        EXEName = "hl2.exe";
+                        CommandLine = Settings.ReadString("CyberDiver_LaunchOptions");
+                        Info = @"This game runs at a 1360x788 resolution.
 If you have a larger monitor resolution, you might need to change your monitor resolution in order to fit this game on your screen properly.
 Game Instructions:
 To start the game, press F3 2 times on your keyboard.
 To navigate the interface, use the arrow keys to move around the interface, and press F2 to select an option.
 To exit the game, close the game window.";
-                    Image = "cd_large";
-                    break;
-              		
-              		case GameType.L4DS:
-              		Name = "Left 4 Dead Survivors";
-					EXEName = "left4dead2.exe";
-					CommandLine = Settings.ReadString("L4DS_LaunchOptions");
-                    Info = @"This game runs at a 1920x1080 resolution by default, but it can be changed with the -w and h launch options.
+                        Image = "cd_large";
+                        break;
+
+                    case GameType.L4DS:
+                        Name = "Left 4 Dead Survivors";
+                        EXEName = "left4dead2.exe";
+                        CommandLine = Settings.ReadString("L4DS_LaunchOptions");
+                        Info = @"This game runs at a 1920x1080 resolution by default, but it can be changed with the -w and h launch options.
 Game Instructions:
 Left 4 Dead Survivors uses an interface that supports Mouse and Keyboard.
 To exit the game, close the game window.
 Customization Instructions:
 To customize your character, use the '-console' launch option, then type the command 'customAvatar_controller' into the console and hit Enter/Return. 
 After customizing your character, press 'Reload' then 'Start' to get into the game.";
-                    Image = "l4ds_large";
-                    break;
-              		
-          			default:
-              		Name = "Launcher";
-					EXEName = "";
-					CommandLine = "";
-                    Info = "";
-                    Image = "cd_large";
-              		break;
-      			}
-			}
+                        Image = "l4ds_large";
+                        break;
+
+                    default:
+                        Name = "Launcher";
+                        EXEName = "";
+                        CommandLine = "";
+                        Info = "";
+                        Image = "cd_large";
+                        break;
+                }
+            }
 
             public string GetTechnicalName()
             {
@@ -237,12 +237,12 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
                         State = launcherState,
                         Details = launcherDetails,
                         Timestamps = {
-                        Start = UnixTimeNow()
-                    },
+                            Start = UnixTimeNow()
+                        },
                         Assets = {
-                        LargeImage = gameClass.Image,
-                        LargeText = gameClass.Name
-                    },
+                            LargeImage = gameClass.Image,
+                            LargeText = gameClass.Name
+                        },
                         Instance = true
                     };
 
@@ -268,7 +268,7 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
         }
 
         public static void LaunchGame(GameType gameToLaunch)
-		{
+        {
             if (Settings.ReadBool("CloseWhenGameLaunches"))
             {
                 foreach (Form form in Application.OpenForms)
@@ -279,7 +279,8 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
                         {
                             if (form.InvokeRequired)
                             {
-                                form.Invoke(new MethodInvoker(delegate {
+                                form.Invoke(new MethodInvoker(delegate
+                                {
                                     form.Visible = false;
                                 }));
                             }
@@ -302,7 +303,7 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
                 proc.EnableRaisingEvents = true;
                 proc.Exited += Proc_Exited;
             }
-		}
+        }
 
         private static void Proc_Exited(object sender, EventArgs e)
         {
@@ -316,7 +317,8 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
                         {
                             if (form.InvokeRequired)
                             {
-                                form.Invoke(new MethodInvoker(delegate {
+                                form.Invoke(new MethodInvoker(delegate
+                                {
                                     form.Visible = true;
                                 }));
                             }
@@ -339,7 +341,14 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
             var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
             return (long)timeSpan.TotalSeconds;
         }
-	}
+
+        public static bool IsSteamAppInstalled(int steamappid)
+        {
+            string path = @"HKEY_CURRENT_USER\Software\Valve\Steam\Apps\" + steamappid.ToString();
+            var isInstalled = Registry.GetValue(path, "Installed", null);
+            return isInstalled != null;
+        }
+    }
 	
 	#endregion
 	

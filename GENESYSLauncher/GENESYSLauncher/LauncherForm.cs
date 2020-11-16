@@ -78,11 +78,44 @@ namespace GENESYSLauncher
 
 			//check for the games.
 			bool hl2acAvailable = Launcher.CreateGame(Launcher.GameType.HL2S).ValidateGamePath();
-			if (!hl2acAvailable) { tabControl1.TabPages.Remove(tabPage1); }
+            if (!hl2acAvailable)
+            {
+                tabControl1.TabPages.Remove(tabPage1);
+            }
+			else
+			{
+				if (!Launcher.IsSteamAppInstalled(220))
+				{
+					MessageBox.Show("You must own and install a copy of Half-Life 2 in order to run " + Launcher.CreateGame(Launcher.GameType.HL2S).Name, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+					tabControl1.TabPages.Remove(tabPage1);
+				}
+			}
 			bool cdAvailable = Launcher.CreateGame(Launcher.GameType.CyberDiver).ValidateGamePath();
-			if (!cdAvailable) { tabControl1.TabPages.Remove(tabPage2); }
+            if (!cdAvailable)
+            {
+                tabControl1.TabPages.Remove(tabPage2);
+            }
+			else
+			{
+				if (!Launcher.IsSteamAppInstalled(220) && !Launcher.IsSteamAppInstalled(380) && !Launcher.IsSteamAppInstalled(420))
+				{
+					MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver).Name, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+					tabControl1.TabPages.Remove(tabPage2);
+				}
+			}
 			bool l4dsAvailable = Launcher.CreateGame(Launcher.GameType.L4DS).ValidateGamePath();
-			if (!l4dsAvailable) { tabControl1.TabPages.Remove(tabPage3); }
+            if (!l4dsAvailable)
+            {
+                tabControl1.TabPages.Remove(tabPage3);
+            }
+			else
+			{
+				if (!Launcher.IsSteamAppInstalled(550))
+				{
+					MessageBox.Show("You must own and install a copy of Left 4 Dead 2 in order to run " + Launcher.CreateGame(Launcher.GameType.L4DS).Name, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+					tabControl1.TabPages.Remove(tabPage3);
+				}
+			}
 
 			if (tabControl1.TabPages.Count <= 0)
 			{

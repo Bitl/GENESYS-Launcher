@@ -150,5 +150,29 @@ namespace GENESYSLauncher.Properties {
                 this["LastSelectedTabIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CSNEO_InstallDir {
+            get {
+                return ((string)(this["CSNEO_InstallDir"]));
+            }
+            set {
+                this["CSNEO_InstallDir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CSNEO_ShowTab {
+            get {
+                return ((bool)(this["CSNEO_ShowTab"]));
+            }
+            set {
+                this["CSNEO_ShowTab"] = value;
+            }
+        }
     }
 }

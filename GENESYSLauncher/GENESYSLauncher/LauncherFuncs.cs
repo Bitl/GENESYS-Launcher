@@ -112,7 +112,8 @@ namespace GENESYSLauncher
             CyberDiver_Main,
             CyberDiver_v1_00,
             CyberDiver_v1_20j,
-            L4DS
+            L4DS,
+            CSNEO
         }
 
         public class Game
@@ -189,6 +190,20 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
                         Image = "l4ds_large";
                         break;
 
+                    case GameType.CSNEO:
+                        Name = "Counter-Strike NEO";
+                        EXEName = "TeknoParrotUi.exe";
+                        CommandLine = "";
+                        Info = @"Once the game has fully loaded, access the console with the ALT+F7 keys, and enter the following command: 'login 13' (without quotes). 
+Feel free to change the numbers to whatever you like; 33, 69, 71 and such. 
+Click on 'OK' on the prompt and enter any username. 
+Then click on the [決定] button, followed by the [はい] button and wait for several seconds. 
+The main menu should appear. 
+For the sake of simplicity, open the console again with the ALT+F7 key and enter the map (e.g. map neo_06collision). 
+Once the map loads, access the console once again and enter the bot_add command to add bots to the team.";
+                        Image = "csneo_large";
+                        break;
+
                     default:
                         Name = "Launcher";
                         EXEName = "";
@@ -201,12 +216,21 @@ After customizing your character, press 'Reload' then 'Start' to get into the ga
 
             public string GetTechnicalName()
             {
-                return Name.Replace(" ", "").Replace("-", "");
+                return Name.Replace(" ", "").Replace("-", "").Replace(".", "");
             }
 
             public string GetGamePath()
             {
-                string returnVal = GlobalVars.GamePath + "\\" + Name + "\\" + EXEName;
+                string returnVal = "";
+                if (Type != GameType.CSNEO)
+                {
+                    returnVal = GlobalVars.GamePath + "\\" + Name + "\\" + EXEName;
+                }
+                else
+                {
+                    returnVal = Settings.ReadString("CSNEO_InstallDir") + "\\" + EXEName;
+                }
+
                 Console.WriteLine(GetTechnicalName() + ".GetGamePath() returns " + returnVal);
                 return returnVal;
             }

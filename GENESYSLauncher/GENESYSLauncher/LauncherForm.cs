@@ -64,6 +64,16 @@ namespace GENESYSLauncher
 
 			#region l4d survivors load settings
 			textBox6.Text = Settings.ReadString("L4DS_LaunchOptions");
+            #endregion
+
+            #region csneo load settings
+            textBox1.Text = Settings.ReadString("CSNEO_InstallDir");
+			checkBox4.Checked = Settings.ReadBool("CSNEO_ShowTab");
+
+			if (!Settings.ReadBool("CSNEO_ShowTab"))
+            {
+				tabControl1.TabPages.Remove(tabPage4);
+			}
 			#endregion
 
 #if DEBUG
@@ -146,19 +156,19 @@ namespace GENESYSLauncher
 				// Discord Functionality
 				if (File.Exists(GlobalVars.DiscordDllPath) && Properties.Settings.Default.DiscordIntegration)
 				{
-					Console.WriteLine("DISCORD: Loaded!");
-					GlobalVars.discord = new Discord.Discord(Properties.Settings.Default.DiscordAppID, (System.UInt64)Discord.CreateFlags.NoRequireDiscord);
-					GlobalVars.discord.SetLogHook(Discord.LogLevel.Debug, (level, message) =>
-					{
-						Console.WriteLine("Log[{0}] {1}", level, message);
-					});
-					Launcher.UpdateActivity(Launcher.GameType.None);
-
 					// Pump the event look to ensure all callbacks continue to get fired.
 					//https://stackoverflow.com/questions/17142842/infinite-while-loop-with-form-application-c-sharp
 					continueDiscordThreadLoop = true;
 					discordThread = new Thread(() =>
 					{
+						Console.WriteLine("DISCORD: Loaded!");
+						GlobalVars.discord = new Discord.Discord(Properties.Settings.Default.DiscordAppID, (System.UInt64)Discord.CreateFlags.NoRequireDiscord);
+						GlobalVars.discord.SetLogHook(Discord.LogLevel.Debug, (level, message) =>
+						{
+							Console.WriteLine("Log[{0}] {1}", level, message);
+						});
+						Launcher.UpdateActivity(Launcher.GameType.None);
+
 						try
 						{
 							while (continueDiscordThreadLoop)
@@ -205,19 +215,32 @@ namespace GENESYSLauncher
 			Properties.Settings.Default.Save();
 		}
 
-		void switchImage()
+        void switchImage()
         {
-			if (tabControl1.SelectedTab == tabPage1)
-			{
+            if (tabControl1.SelectedTab == tabPage1)
+            {
                 pictureBox1.Image = imageList3.Images[0];
-			}
-			else if (tabControl1.SelectedTab == tabPage2)
-			{
-				pictureBox1.Image = imageList3.Images[1];
-			}
-			else if (tabControl1.SelectedTab == tabPage3)
-			{
-				pictureBox1.Image = imageList3.Images[2];
+            }
+            else if (tabControl1.SelectedTab == tabPage2)
+            {
+                pictureBox1.Image = imageList3.Images[1];
+            }
+            else if (tabControl1.SelectedTab == tabPage3)
+            {
+                pictureBox1.Image = imageList3.Images[2];
+            }
+            else if (tabControl1.SelectedTab == tabPage4)
+            {
+                pictureBox1.Image = imageList3.Images[3];
+            }
+        }
+
+		void MainFormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (GlobalVars.discord != null)
+            {
+				MethodInvoker mi = delegate () { GlobalVars.discord.Dispose(); };
+				this.Invoke(mi);
 			}
 		}
 
@@ -304,6 +327,16 @@ namespace GENESYSLauncher
 			this.Invoke(mi);
 		}
 
+		private void button10_Click(object sender, EventArgs e)
+		{
+			Launcher.LaunchGame_Debug(Launcher.GameType.HL2S);
+		}
+
+		private void button2_Click(object sender, EventArgs e)
+		{
+			Launcher.ShowGameInfo(Launcher.GameType.HL2S);
+		}
+
 		#endregion
 
 		#region Cyber Diver
@@ -349,6 +382,16 @@ namespace GENESYSLauncher
 			}
 		}
 
+		private void button4_Click(object sender, EventArgs e)
+		{
+			Launcher.ShowGameInfo(Launcher.GameType.CyberDiver_Main);
+		}
+
+		private void button9_Click(object sender, EventArgs e)
+		{
+			Launcher.LaunchGame_Debug(Launcher.GameType.CyberDiver_v1_00);
+		}
+
 		#endregion
 
 		#region L4D Survivors
@@ -365,11 +408,70 @@ namespace GENESYSLauncher
 			MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.L4DS); };
 			this.Invoke(mi);
 		}
-        #endregion
 
-        #region General/Debug
+		private void button5_Click(object sender, EventArgs e)
+		{
+			Launcher.ShowGameInfo(Launcher.GameType.L4DS);
+		}
 
-        void Button8Click(object sender, EventArgs e)
+		private void button11_Click(object sender, EventArgs e)
+		{
+			Launcher.LaunchGame_Debug(Launcher.GameType.L4DS);
+		}
+		#endregion
+
+		#region CS NEO
+		private void button15_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Please provide the location to your TeknoParrot folder.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+			using (var fbd = new FolderBrowserDialog())
+			{
+				DialogResult result = fbd.ShowDialog();
+
+				if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+				{
+                    Settings.WriteString("CSNEO_InstallDir", fbd.SelectedPath);
+					textBox1.Text = Settings.ReadString("CSNEO_InstallDir");
+				}
+			}
+		}
+
+		private void button13_Click(object sender, EventArgs e)
+		{
+			Launcher.ShowGameInfo(Launcher.GameType.CSNEO);
+		}
+
+		private void button14_Click(object sender, EventArgs e)
+		{
+            if (!string.IsNullOrWhiteSpace(Settings.ReadString("CSNEO_InstallDir")))
+            {
+                MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.CSNEO); };
+                this.Invoke(mi);
+            }
+            else
+            {
+				MessageBox.Show("A path has not been defined for CS:NEO. Please load up a path for the game.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
+
+		private void checkBox4_CheckedChanged(object sender, EventArgs e)
+		{
+			Settings.WriteBool("CSNEO_ShowTab", checkBox4.Checked);
+
+			if (Settings.ReadBool("CSNEO_ShowTab") && !tabControl1.TabPages.Contains(tabPage4))
+			{
+				tabControl1.TabPages.Add(tabPage4);
+			}
+			else if (!Settings.ReadBool("CSNEO_ShowTab") && tabControl1.TabPages.Contains(tabPage4))
+			{
+				tabControl1.TabPages.Remove(tabPage4);
+			}
+		}
+		#endregion
+
+		#region General/Debug
+		void Button8Click(object sender, EventArgs e)
         {
 			var game = Launcher.CreateGame(Launcher.GameType.HL2S);
 			string processPath = game.GetGamePath() + " " + game.CommandLine + (game.ValidateGamePath() ? "" : " (Game unavailable: It cannot be found in the games directory.)");
@@ -386,35 +488,6 @@ namespace GENESYSLauncher
 			MessageBox.Show("HL2 Survivor: " + processPath + "\n\nCyber Diver v1: " + processPath2 + "\n\nCyber Diver v1.2: " + processPath21 + "\n\nL4D Survivors: " + processPath3);
         }
 
-		private void button2_Click(object sender, EventArgs e)
-		{
-			Launcher.ShowGameInfo(Launcher.GameType.HL2S);
-		}
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-			Launcher.ShowGameInfo(Launcher.GameType.CyberDiver_Main);
-		}
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-			Launcher.ShowGameInfo(Launcher.GameType.L4DS);
-		}
-
-		private void button9_Click(object sender, EventArgs e)
-		{
-			Launcher.LaunchGame_Debug(Launcher.GameType.CyberDiver_v1_00);
-		}
-
-		private void button10_Click(object sender, EventArgs e)
-		{
-			Launcher.LaunchGame_Debug(Launcher.GameType.HL2S);
-		}
-
-		private void button11_Click(object sender, EventArgs e)
-		{
-			Launcher.LaunchGame_Debug(Launcher.GameType.L4DS);
-		}
 		private void button12_Click(object sender, EventArgs e)
 		{
 			Launcher.LaunchGame_Debug(Launcher.GameType.None);

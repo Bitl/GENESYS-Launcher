@@ -87,6 +87,13 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.button13 = new System.Windows.Forms.Button();
+            this.button14 = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button15 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
@@ -98,6 +105,7 @@
             this.button12 = new System.Windows.Forms.Button();
             this.imageList3 = new System.Windows.Forms.ImageList(this.components);
             this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -107,6 +115,8 @@
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -196,6 +206,7 @@
             this.imageList1.Images.SetKeyName(0, "hl2s_discord.png");
             this.imageList1.Images.SetKeyName(1, "cd_discord.png");
             this.imageList1.Images.SetKeyName(2, "l4ds_discord.png");
+            this.imageList1.Images.SetKeyName(3, "csneo_discord.png");
             // 
             // tabPage2
             // 
@@ -390,7 +401,9 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.ImageList = this.imageList1;
+            this.tabControl1.ItemSize = new System.Drawing.Size(64, 19);
             this.tabControl1.Location = new System.Drawing.Point(7, 225);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
@@ -399,6 +412,78 @@
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 1;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.TabControl1IndexChanged);
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.button13);
+            this.tabPage4.Controls.Add(this.button14);
+            this.tabPage4.Controls.Add(this.groupBox3);
+            this.tabPage4.ImageKey = "csneo_discord.png";
+            this.tabPage4.Location = new System.Drawing.Point(4, 23);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(300, 253);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // button13
+            // 
+            this.button13.ImageKey = "info.png";
+            this.button13.ImageList = this.imageList2;
+            this.button13.Location = new System.Drawing.Point(115, 76);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(27, 27);
+            this.button13.TabIndex = 15;
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // button14
+            // 
+            this.button14.ImageKey = "play.png";
+            this.button14.ImageList = this.imageList2;
+            this.button14.Location = new System.Drawing.Point(148, 76);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(27, 27);
+            this.button14.TabIndex = 13;
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.button15);
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Location = new System.Drawing.Point(50, 6);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(200, 66);
+            this.groupBox3.TabIndex = 14;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Settings";
+            // 
+            // button15
+            // 
+            this.button15.Location = new System.Drawing.Point(163, 33);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(31, 21);
+            this.button15.TabIndex = 15;
+            this.button15.Text = "...";
+            this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(6, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(188, 14);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "TeknoParrot Path";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(7, 33);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(150, 20);
+            this.textBox1.TabIndex = 13;
             // 
             // checkBox5
             // 
@@ -412,7 +497,7 @@
             // 
             // label20
             // 
-            this.label20.Location = new System.Drawing.Point(8, 195);
+            this.label20.Location = new System.Drawing.Point(8, 182);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(45, 14);
             this.label20.TabIndex = 3;
@@ -421,7 +506,7 @@
             // 
             // label21
             // 
-            this.label21.Location = new System.Drawing.Point(48, 195);
+            this.label21.Location = new System.Drawing.Point(48, 182);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(96, 14);
             this.label21.TabIndex = 4;
@@ -430,7 +515,7 @@
             // label22
             // 
             this.label22.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label22.Location = new System.Drawing.Point(45, 195);
+            this.label22.Location = new System.Drawing.Point(45, 182);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(2, 18);
             this.label22.TabIndex = 5;
@@ -497,16 +582,28 @@
             this.imageList3.Images.SetKeyName(0, "hl2s.png");
             this.imageList3.Images.SetKeyName(1, "cd.png");
             this.imageList3.Images.SetKeyName(2, "l4ds.png");
+            this.imageList3.Images.SetKeyName(3, "neo.jpg");
             // 
             // checkBox3
             // 
-            this.checkBox3.Location = new System.Drawing.Point(150, 201);
+            this.checkBox3.Location = new System.Drawing.Point(7, 201);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(155, 18);
+            this.checkBox3.Size = new System.Drawing.Size(141, 18);
             this.checkBox3.TabIndex = 11;
-            this.checkBox3.Text = "Discord Integration (restart)";
+            this.checkBox3.Text = "Discord (restart to apply)";
             this.checkBox3.UseVisualStyleBackColor = true;
             this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(150, 202);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(88, 17);
+            this.checkBox4.TabIndex = 12;
+            this.checkBox4.Text = "CS:NEO Tab";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
             // 
             // LauncherForm
             // 
@@ -514,6 +611,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(325, 542);
+            this.Controls.Add(this.checkBox4);
             this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.button12);
             this.Controls.Add(this.button11);
@@ -531,6 +629,7 @@
             this.MaximizeBox = false;
             this.Name = "LauncherForm";
             this.Text = "GENESYS Launcher";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
             this.Load += new System.EventHandler(this.MainFormLoad);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage3.ResumeLayout(false);
@@ -545,7 +644,11 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
 		}
 
@@ -561,5 +664,13 @@
         private System.Windows.Forms.ImageList imageList2;
         private System.Windows.Forms.ImageList imageList3;
         private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button button15;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.CheckBox checkBox4;
     }
 }

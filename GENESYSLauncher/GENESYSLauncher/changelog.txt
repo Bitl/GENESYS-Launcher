@@ -11,5 +11,6 @@ v2.0:
 	- As a result, you can only hide the launcher upon loading a game.
 - The launch options for each game can now be directly edited in the launcher.
 - The launcher now validates which required games you have installed. The launcher will notify you if you do not own or have not yet installed a required game.
+- The launcher now detects both versions of Cyber Diver.
 v1.0:
 - Original release

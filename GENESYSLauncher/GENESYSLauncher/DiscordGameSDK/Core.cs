@@ -1829,10 +1829,12 @@ namespace Discord
             callback(result);
         }
 
+        FFIMethods.UpdateActivityCallback updateActivityCallback;
+
         public void UpdateActivity(Activity activity, UpdateActivityHandler callback)
         {
             GCHandle wrapped = GCHandle.Alloc(callback);
-            Methods.UpdateActivity(MethodsPtr, ref activity, GCHandle.ToIntPtr(wrapped), UpdateActivityCallbackImpl);
+            Methods.UpdateActivity(MethodsPtr, ref activity, GCHandle.ToIntPtr(wrapped), updateActivityCallback = UpdateActivityCallbackImpl);
         }
 
         [MonoPInvokeCallback]

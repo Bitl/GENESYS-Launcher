@@ -109,6 +109,7 @@ namespace GENESYSLauncher
         {
             None,
             HL2S,
+            CyberDiver_Main,
             CyberDiver_v1_00,
             CyberDiver_v1_20j,
             L4DS
@@ -145,16 +146,24 @@ To exit the game, type 'exit' into the Debug Console window.";
                         Image = "hl2ac_large";
                         break;
 
-                    case GameType.CyberDiver_v1_00:
-                        Name = "Cyber Diver v1.00";
-                        EXEName = "hl2.exe";
-                        CommandLine = Settings.ReadString("CyberDiver_LaunchOptions");
+                    case GameType.CyberDiver_Main:
+                        Name = "Cyber Diver";
+                        EXEName = "";
+                        CommandLine = "";
                         Info = @"This game runs at a 1360x788 resolution.
 If you have a larger monitor resolution, you might need to change your monitor resolution in order to fit this game on your screen properly.
 Game Instructions:
 To start the game, press F3 2 times on your keyboard.
 To navigate the interface, use the arrow keys to move around the interface, and press F2 to select an option.
 To exit the game, close the game window.";
+                        Image = "";
+                        break;
+
+                    case GameType.CyberDiver_v1_00:
+                        Name = "Cyber Diver v1.00";
+                        EXEName = "hl2.exe";
+                        CommandLine = Settings.ReadString("CyberDiver_LaunchOptions");
+                        Info = "";
                         Image = "cd_large";
                         break;
 

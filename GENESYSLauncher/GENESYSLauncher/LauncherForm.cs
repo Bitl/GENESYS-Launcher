@@ -393,7 +393,7 @@ namespace GENESYSLauncher
 
         private void button4_Click(object sender, EventArgs e)
         {
-			Launcher.ShowGameInfo(Launcher.GameType.CyberDiver_v1_00);
+			Launcher.ShowGameInfo(Launcher.GameType.CyberDiver_Main);
 		}
 
         private void button5_Click(object sender, EventArgs e)

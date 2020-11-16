@@ -127,23 +127,19 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>SET path=$(ProjectDir)bin\GENESYS_CyberDiver1_00
+    <PostBuildEvent>SET path=$(ProjectDir)bin\GENESYS_CyberDiver
 if not exist "%25path%25" mkdir "%25path%25"
-SET path2=$(ProjectDir)bin\GENESYS_CyberDiver1_20j
+SET path2=$(ProjectDir)bin\GENESYS_HL2SurvivorVer2_0
 if not exist "%25path2%25" mkdir "%25path2%25"
-SET path3=$(ProjectDir)bin\GENESYS_HL2SurvivorVer2_0
+SET path3=$(ProjectDir)bin\GENESYS_L4DSurvivors
 if not exist "%25path3%25" mkdir "%25path3%25"
-SET path4=$(ProjectDir)bin\GENESYS_L4DSurvivors
-if not exist "%25path4%25" mkdir "%25path4%25"
 
 copy  $(ProjectDir)$(OutDir) "%25path%25"\*
 copy  $(ProjectDir)$(OutDir) "%25path2%25"\*
 copy  $(ProjectDir)$(OutDir) "%25path3%25"\*
-copy  $(ProjectDir)$(OutDir) "%25path4%25"\*
 
 copy  $(ProjectDir)changelog.txt "%25path%25"\changelog.txt
 copy  $(ProjectDir)changelog.txt "%25path2%25"\changelog.txt
-copy  $(ProjectDir)changelog.txt "%25path3%25"\changelog.txt
-copy  $(ProjectDir)changelog.txt "%25path4%25"\changelog.txt</PostBuildEvent>
+copy  $(ProjectDir)changelog.txt "%25path3%25"\changelog.txt</PostBuildEvent>
   </PropertyGroup>
 </Project>

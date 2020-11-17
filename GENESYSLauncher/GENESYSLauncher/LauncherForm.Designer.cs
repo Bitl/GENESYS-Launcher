@@ -208,7 +208,7 @@
             this.imageList1.Images.SetKeyName(0, "hl2s_discord.png");
             this.imageList1.Images.SetKeyName(1, "cd_discord.png");
             this.imageList1.Images.SetKeyName(2, "l4ds_discord.png");
-            this.imageList1.Images.SetKeyName(3, "csneo_discord.png");
+            this.imageList1.Images.SetKeyName(3, "csneo_discord_new_tab.png");
             // 
             // tabPage2
             // 
@@ -420,7 +420,7 @@
             this.tabPage4.Controls.Add(this.button13);
             this.tabPage4.Controls.Add(this.button14);
             this.tabPage4.Controls.Add(this.groupBox3);
-            this.tabPage4.ImageKey = "csneo_discord.png";
+            this.tabPage4.ImageKey = "csneo_discord_new_tab.png";
             this.tabPage4.Location = new System.Drawing.Point(4, 23);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Size = new System.Drawing.Size(300, 253);
@@ -465,7 +465,7 @@
             // 
             this.button15.Location = new System.Drawing.Point(163, 33);
             this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(31, 21);
+            this.button15.Size = new System.Drawing.Size(31, 20);
             this.button15.TabIndex = 15;
             this.button15.Text = "...";
             this.button15.UseVisualStyleBackColor = true;
@@ -615,6 +615,7 @@
             this.button16.TabIndex = 13;
             this.button16.Text = "NEO";
             this.button16.UseVisualStyleBackColor = true;
+            this.button16.Visible = false;
             this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
             // button17
@@ -654,7 +655,6 @@
             this.MaximizeBox = false;
             this.Name = "LauncherForm";
             this.Text = "GENESYS Launcher";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
             this.Load += new System.EventHandler(this.MainFormLoad);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage3.ResumeLayout(false);

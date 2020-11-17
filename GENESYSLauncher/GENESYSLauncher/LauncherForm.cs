@@ -82,7 +82,9 @@ namespace GENESYSLauncher
 				button9.Visible = true;
 				button10.Visible = true;
 				button11.Visible = true;
-				button12.Visible = true;
+                button12.Visible = true;
+                button17.Visible = true;
+				button16.Visible = true;
 			}
 			else
 			{
@@ -237,15 +239,6 @@ namespace GENESYSLauncher
                 pictureBox1.Image = imageList3.Images[3];
             }
         }
-
-		void MainFormClosing(object sender, FormClosingEventArgs e)
-		{
-			if (GlobalVars.discord != null)
-            {
-				MethodInvoker mi = delegate () { GlobalVars.discord.Dispose(); };
-				Invoke(mi);
-			}
-		}
 
 		#endregion
 

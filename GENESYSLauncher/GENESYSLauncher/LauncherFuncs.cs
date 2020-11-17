@@ -209,7 +209,7 @@ Once the map loads, access the console once again and enter the bot_add command 
                         EXEName = "";
                         CommandLine = "";
                         Info = "";
-                        Image = "cd_large";
+                        Image = "launcher_large";
                         break;
                 }
             }
@@ -268,10 +268,15 @@ Once the map loads, access the console once again and enter the bot_add command 
 
                     string launcherState = "In Game";
                     string launcherDetails = gameClass.Name;
+                    string smallImage = "launcher_large";
+                    string smallText = launcherState;
+
                     if (gameClass.Type == GameType.None)
                     {
                         launcherState = "In Launcher";
                         launcherDetails = "";
+                        smallImage = "";
+                        smallText = "";
                     }
 
                     var activity = new Discord.Activity
@@ -283,7 +288,9 @@ Once the map loads, access the console once again and enter the bot_add command 
                         },
                         Assets = {
                             LargeImage = gameClass.Image,
-                            LargeText = gameClass.Name
+                            LargeText = gameClass.Name,
+                            SmallImage = smallImage,
+                            SmallText = smallText
                         },
                         Instance = true
                     };

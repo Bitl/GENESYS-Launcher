@@ -80,13 +80,20 @@ namespace GENESYSLauncher
 				}
 				else if (CommandLine["csneo"] != null)
 				{
-					if (Launcher.CreateGame(Launcher.GameType.CSNEO).ValidateGamePath())
+					if (!string.IsNullOrWhiteSpace(Settings.ReadString("CSNEO_InstallDir")))
 					{
-						Launcher.LaunchGame(Launcher.GameType.CSNEO);
+						if (Launcher.CreateGame(Launcher.GameType.CSNEO).ValidateGamePath())
+						{
+							Launcher.LaunchGame(Launcher.GameType.CSNEO);
+						}
+						else
+						{
+							MessageBox.Show("The game cannot be launched because it cannot be found.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+						}
 					}
 					else
 					{
-						MessageBox.Show("The game cannot be launched because it cannot be found.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+						MessageBox.Show("A path has not been defined for CS:NEO. Please load up a path for the game in the launcher.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 					}
 				}
 

@@ -521,7 +521,8 @@ Once the map loads, access the console once again and enter the bot_add command 
         public static string GamePath = RootPath + "\\games";
         public static Discord.Discord discord = null;
         public static bool isConsole = true;
-	}
+        public static bool isDebug = false;
+    }
 	
 	#endregion
 }

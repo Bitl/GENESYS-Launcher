@@ -106,6 +106,8 @@
             this.imageList3 = new System.Windows.Forms.ImageList(this.components);
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.button16 = new System.Windows.Forms.Button();
+            this.button17 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -522,11 +524,11 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(198, 511);
+            this.button8.Location = new System.Drawing.Point(268, 511);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(114, 19);
+            this.button8.Size = new System.Drawing.Size(47, 19);
             this.button8.TabIndex = 6;
-            this.button8.Text = "Game Paths";
+            this.button8.Text = "Paths";
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Visible = false;
             this.button8.Click += new System.EventHandler(this.Button8Click);
@@ -535,18 +537,18 @@
             // 
             this.button9.Location = new System.Drawing.Point(51, 511);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(41, 19);
+            this.button9.Size = new System.Drawing.Size(28, 19);
             this.button9.TabIndex = 7;
-            this.button9.Text = "CD";
+            this.button9.Text = "v1";
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Visible = false;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(98, 511);
+            this.button10.Location = new System.Drawing.Point(133, 511);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(50, 19);
+            this.button10.Size = new System.Drawing.Size(35, 19);
             this.button10.TabIndex = 8;
             this.button10.Text = "HL2";
             this.button10.UseVisualStyleBackColor = true;
@@ -555,7 +557,7 @@
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(154, 511);
+            this.button11.Location = new System.Drawing.Point(174, 511);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(38, 19);
             this.button11.TabIndex = 9;
@@ -605,12 +607,35 @@
             this.checkBox4.UseVisualStyleBackColor = true;
             this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
             // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(218, 511);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(43, 19);
+            this.button16.TabIndex = 13;
+            this.button16.Text = "NEO";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
+            // 
+            // button17
+            // 
+            this.button17.Location = new System.Drawing.Point(85, 511);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(42, 19);
+            this.button17.TabIndex = 14;
+            this.button17.Text = "v1.2";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Visible = false;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
+            // 
             // LauncherForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(325, 542);
+            this.Controls.Add(this.button17);
+            this.Controls.Add(this.button16);
             this.Controls.Add(this.checkBox4);
             this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.button12);
@@ -672,5 +697,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.Button button16;
+        private System.Windows.Forms.Button button17;
     }
 }

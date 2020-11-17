@@ -44,6 +44,8 @@ namespace GENESYSLauncher
 					{
 						MessageBox.Show("The game cannot be launched because it cannot be found.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 					}
+
+					Application.Exit();
 				}
 				else if (CommandLine["cdv100"] != null)
 				{
@@ -55,6 +57,8 @@ namespace GENESYSLauncher
 					{
 						MessageBox.Show("The game cannot be launched because it cannot be found.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 					}
+
+					Application.Exit();
 				}
 				else if (CommandLine["cdv120j"] != null)
 				{
@@ -66,6 +70,8 @@ namespace GENESYSLauncher
 					{
 						MessageBox.Show("The game cannot be launched because it cannot be found.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 					}
+
+					Application.Exit();
 				}
 				else if (CommandLine["l4ds"] != null)
 				{
@@ -77,6 +83,8 @@ namespace GENESYSLauncher
 					{
 						MessageBox.Show("The game cannot be launched because it cannot be found.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 					}
+
+					Application.Exit();
 				}
 				else if (CommandLine["csneo"] != null)
 				{
@@ -95,9 +103,14 @@ namespace GENESYSLauncher
 					{
 						MessageBox.Show("A path has not been defined for CS:NEO. Please load up a path for the game in the launcher.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 					}
-				}
 
-				Application.Exit();
+					Application.Exit();
+				}
+				else if (CommandLine["debug"] != null)
+                {
+					GlobalVars.isDebug = true;
+					Application.Run(new LauncherForm());
+				}
 			}
 		}
 		

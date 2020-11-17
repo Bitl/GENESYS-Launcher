@@ -76,15 +76,18 @@ namespace GENESYSLauncher
 			}
 			#endregion
 
-#if DEBUG
-			button8.Visible = true;
-			button9.Visible = true;
-			button10.Visible = true;
-			button11.Visible = true;
-			button12.Visible = true;
-#else
-			tabControl1.Height = 305;
-#endif
+			if (GlobalVars.isDebug == true)
+			{
+				button8.Visible = true;
+				button9.Visible = true;
+				button10.Visible = true;
+				button11.Visible = true;
+				button12.Visible = true;
+			}
+			else
+			{
+				tabControl1.Height = 305;
+			}
 
 			//check for the games.
 			bool hl2acAvailable = Launcher.CreateGame(Launcher.GameType.HL2S).ValidateGamePath();
@@ -403,6 +406,11 @@ namespace GENESYSLauncher
 			Launcher.LaunchGame_Debug(Launcher.GameType.CyberDiver_v1_00);
 		}
 
+		private void button17_Click(object sender, EventArgs e)
+		{
+			Launcher.LaunchGame_Debug(Launcher.GameType.CyberDiver_v1_20j);
+		}
+
 		#endregion
 
 		#region L4D Survivors
@@ -458,6 +466,11 @@ namespace GENESYSLauncher
 		private void button13_Click(object sender, EventArgs e)
 		{
 			Launcher.ShowGameInfo(Launcher.GameType.CSNEO);
+		}
+
+		private void button16_Click(object sender, EventArgs e)
+		{
+			Launcher.LaunchGame_Debug(Launcher.GameType.CSNEO);
 		}
 
 		private void button14_Click(object sender, EventArgs e)

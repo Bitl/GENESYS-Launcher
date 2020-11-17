@@ -96,7 +96,7 @@ namespace GENESYSLauncher
 			{
 				if (!Launcher.IsSteamAppInstalled(220))
 				{
-					MessageBox.Show("You must own and install a copy of Half-Life 2 in order to run " + Launcher.CreateGame(Launcher.GameType.HL2S).Name, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("You must own and install a copy of Half-Life 2 in order to run " + Launcher.CreateGame(Launcher.GameType.HL2S).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 					tabControl1.TabPages.Remove(tabPage1);
 				}
 			}
@@ -113,7 +113,7 @@ namespace GENESYSLauncher
 				{
 					if (!Launcher.IsSteamAppInstalled(220) && !Launcher.IsSteamAppInstalled(380) && !Launcher.IsSteamAppInstalled(420))
 					{
-						MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_20j).Name, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+						MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_20j).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 						tabControl1.TabPages.Remove(tabPage2);
 					}
 				}
@@ -122,7 +122,7 @@ namespace GENESYSLauncher
 			{
 				if (!Launcher.IsSteamAppInstalled(220) && !Launcher.IsSteamAppInstalled(380) && !Launcher.IsSteamAppInstalled(420))
 				{
-					MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_00).Name, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_00).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 					tabControl1.TabPages.Remove(tabPage2);
 				}
 			}
@@ -136,14 +136,14 @@ namespace GENESYSLauncher
 			{
 				if (!Launcher.IsSteamAppInstalled(550))
 				{
-					MessageBox.Show("You must own and install a copy of Left 4 Dead 2 in order to run " + Launcher.CreateGame(Launcher.GameType.L4DS).Name, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("You must own and install a copy of Left 4 Dead 2 in order to run " + Launcher.CreateGame(Launcher.GameType.L4DS).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 					tabControl1.TabPages.Remove(tabPage3);
 				}
 			}
 
 			if (tabControl1.TabPages.Count <= 0)
 			{
-				MessageBox.Show("There are no GENESYS games installed. The launcher will now close.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("There are no GENESYS games installed. The launcher will now close.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 				Close();
 			}
 
@@ -203,7 +203,7 @@ namespace GENESYSLauncher
 			if (!init)
 			{
 				Settings.WriteBool("DiscordIntegration", checkBox3.Checked);
-				MessageBox.Show("The launcher will now restart to apply this setting.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+				MessageBox.Show("The launcher will now restart to apply this setting.", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
 				Application.Restart();
 			}
 		}
@@ -240,7 +240,7 @@ namespace GENESYSLauncher
 			if (GlobalVars.discord != null)
             {
 				MethodInvoker mi = delegate () { GlobalVars.discord.Dispose(); };
-				this.Invoke(mi);
+				Invoke(mi);
 			}
 		}
 
@@ -306,25 +306,32 @@ namespace GENESYSLauncher
 			switch (status)
 			{
 				case NESYSRedirection.NESYSRedirectionStatus.Redirected:
-					MessageBox.Show("Host redirection completed!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+					MessageBox.Show("Host redirection completed!", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
 					break;
 				case NESYSRedirection.NESYSRedirectionStatus.FailedToRedirect:
-					MessageBox.Show("ERROR: You have not ran the launcher as administator or the launcher cannot find the hosts file", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("ERROR: You have not ran the launcher as administator or the launcher cannot find the hosts file", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 					break;
 				case NESYSRedirection.NESYSRedirectionStatus.AlreadyRedirected:
-					MessageBox.Show("You already did the host redirection!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+					MessageBox.Show("You already did the host redirection!", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
 					break;
 				default:
-					MessageBox.Show("oh look, nothing!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Question);
+					MessageBox.Show("oh look, nothing!", Text, MessageBoxButtons.OK, MessageBoxIcon.Question);
 					break;
 			}
 		}
 
-		//hl2 survivor launch button
-		void Button1Click(object sender, EventArgs e)
-		{
-			MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.HL2S); };
-			this.Invoke(mi);
+        //hl2 survivor launch button
+        void Button1Click(object sender, EventArgs e)
+        {
+			if (Launcher.CreateGame(Launcher.GameType.HL2S).ValidateGamePath())
+			{
+				MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.HL2S); };
+				Invoke(mi);
+			}
+			else
+			{
+				MessageBox.Show("The game cannot be launched because it cannot be found.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+			}
 		}
 
 		private void button10_Click(object sender, EventArgs e)
@@ -355,16 +362,16 @@ namespace GENESYSLauncher
 
 			if (cdv1Available && cdv12Available)
 			{
-				var result = MessageBox.Show("The launcher detects that you have both versions of Cyber Diver available. Press yes to launch v1.20j, or press no to launch v1.00.", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+				var result = MessageBox.Show("The launcher detects that you have both versions of Cyber Diver available. Press yes to launch v1.20j, or press no to launch v1.00.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 				if (result == DialogResult.Yes)
 				{
 					MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.CyberDiver_v1_20j); };
-					this.Invoke(mi);
+					Invoke(mi);
 				}
 				else if (result == DialogResult.No)
 				{
 					MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.CyberDiver_v1_00); };
-					this.Invoke(mi);
+					Invoke(mi);
 				}
 			}
 			else
@@ -372,12 +379,16 @@ namespace GENESYSLauncher
 				if (cdv1Available)
                 {
 					MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.CyberDiver_v1_00); };
-					this.Invoke(mi);
+					Invoke(mi);
 				}
 				else if (cdv12Available)
                 {
 					MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.CyberDiver_v1_20j); };
-					this.Invoke(mi);
+					Invoke(mi);
+				}
+				else
+                {
+					MessageBox.Show("The game cannot be launched because it cannot be found.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 				}
 			}
 		}
@@ -405,8 +416,15 @@ namespace GENESYSLauncher
 		// l4d survivors launch
 		void Button7Click(object sender, EventArgs e)
 		{
-			MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.L4DS); };
-			this.Invoke(mi);
+            if (Launcher.CreateGame(Launcher.GameType.L4DS).ValidateGamePath())
+            {
+                MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.L4DS); };
+                Invoke(mi);
+            }
+			else
+			{
+				MessageBox.Show("The game cannot be launched because it cannot be found.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+			}
 		}
 
 		private void button5_Click(object sender, EventArgs e)
@@ -423,7 +441,7 @@ namespace GENESYSLauncher
 		#region CS NEO
 		private void button15_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Please provide the location to your TeknoParrot folder.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+			MessageBox.Show("Please provide the location to your TeknoParrot folder.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 			using (var fbd = new FolderBrowserDialog())
 			{
@@ -446,12 +464,19 @@ namespace GENESYSLauncher
 		{
             if (!string.IsNullOrWhiteSpace(Settings.ReadString("CSNEO_InstallDir")))
             {
-                MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.CSNEO); };
-                this.Invoke(mi);
-            }
+				if (Launcher.CreateGame(Launcher.GameType.CSNEO).ValidateGamePath())
+				{
+					MethodInvoker mi = delegate () { Launcher.LaunchGame(Launcher.GameType.CSNEO); };
+					Invoke(mi);
+				}
+				else
+				{
+					MessageBox.Show("The game cannot be launched because it cannot be found.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+				}
+			}
             else
             {
-				MessageBox.Show("A path has not been defined for CS:NEO. Please load up a path for the game.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("A path has not been defined for CS:NEO. Please load up a path for the game.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 

@@ -16,6 +16,7 @@ namespace GENESYSLauncher
 	/// </summary>
 	internal sealed class Program
 	{
+		private static string Text = "GENESYS Launcher";
 		/// <summary>
 		/// Program entry point.
 		/// </summary>
@@ -33,21 +34,60 @@ namespace GENESYSLauncher
             {
 				CommandLineArguments.Arguments CommandLine = new CommandLineArguments.Arguments(args);
 
-                if (CommandLine["hl2ac"] != null)
-                {
-                    Launcher.LaunchGame(Launcher.GameType.HL2S);
-                }
-                else if (CommandLine["cdv100"] != null)
-                {
-                    Launcher.LaunchGame(Launcher.GameType.CyberDiver_v1_00);
-                }
+				if (CommandLine["hl2ac"] != null)
+				{
+					if (Launcher.CreateGame(Launcher.GameType.HL2S).ValidateGamePath())
+					{
+						Launcher.LaunchGame(Launcher.GameType.HL2S);
+					}
+					else
+					{
+						MessageBox.Show("The game cannot be launched because it cannot be found.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+					}
+				}
+				else if (CommandLine["cdv100"] != null)
+				{
+					if (Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_00).ValidateGamePath())
+					{
+						Launcher.LaunchGame(Launcher.GameType.CyberDiver_v1_00);
+					}
+					else
+					{
+						MessageBox.Show("The game cannot be launched because it cannot be found.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+					}
+				}
 				else if (CommandLine["cdv120j"] != null)
 				{
-					Launcher.LaunchGame(Launcher.GameType.CyberDiver_v1_20j);
+					if (Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_20j).ValidateGamePath())
+					{
+						Launcher.LaunchGame(Launcher.GameType.CyberDiver_v1_20j);
+					}
+					else
+					{
+						MessageBox.Show("The game cannot be launched because it cannot be found.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+					}
 				}
 				else if (CommandLine["l4ds"] != null)
 				{
-					Launcher.LaunchGame(Launcher.GameType.L4DS);
+					if (Launcher.CreateGame(Launcher.GameType.L4DS).ValidateGamePath())
+					{
+						Launcher.LaunchGame(Launcher.GameType.L4DS);
+					}
+					else
+					{
+						MessageBox.Show("The game cannot be launched because it cannot be found.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+					}
+				}
+				else if (CommandLine["csneo"] != null)
+				{
+					if (Launcher.CreateGame(Launcher.GameType.CSNEO).ValidateGamePath())
+					{
+						Launcher.LaunchGame(Launcher.GameType.CSNEO);
+					}
+					else
+					{
+						MessageBox.Show("The game cannot be launched because it cannot be found.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+					}
 				}
 
 				Application.Exit();

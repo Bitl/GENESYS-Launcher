@@ -1,3 +1,5 @@
+v2.0.1:
+- Fixed a security issue involving the command line arguments.
 v2.0:
 - Redid the settings system to use Visual Studio's setting system.
 - Rewrote the code behind the scenes for better efficency.

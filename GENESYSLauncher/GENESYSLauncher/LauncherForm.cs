@@ -99,9 +99,9 @@ namespace GENESYSLauncher
             }
 			else
 			{
-				if (!Launcher.IsSteamAppInstalled(220))
+				if (!Launcher.IsSteamAppInstalled(243730) || !Launcher.IsSteamAppInstalled(243750) || !Launcher.IsSteamAppInstalled(220))
 				{
-					MessageBox.Show("You must own and install a copy of Half-Life 2 in order to run " + Launcher.CreateGame(Launcher.GameType.HL2S).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("You must own and install a copy of Half-Life 2 or the Source SDK 2013 Base Singleplayer or Multiplayer in order to run " + Launcher.CreateGame(Launcher.GameType.HL2S).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 					tabControl1.TabPages.Remove(tabPage1);
 				}
 			}
@@ -116,18 +116,18 @@ namespace GENESYSLauncher
 				}
 				else
 				{
-					if (!Launcher.IsSteamAppInstalled(220) && !Launcher.IsSteamAppInstalled(380) && !Launcher.IsSteamAppInstalled(420))
+					if (!Launcher.IsSteamAppInstalled(243730) || !Launcher.IsSteamAppInstalled(243750) || (!Launcher.IsSteamAppInstalled(220) && !Launcher.IsSteamAppInstalled(380) && !Launcher.IsSteamAppInstalled(420)))
 					{
-						MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_20j).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+						MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two, or the Source SDK 2013 Base Singleplayer or Multiplayer in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_20j).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 						tabControl1.TabPages.Remove(tabPage2);
 					}
 				}
             }
 			else
 			{
-				if (!Launcher.IsSteamAppInstalled(220) && !Launcher.IsSteamAppInstalled(380) && !Launcher.IsSteamAppInstalled(420))
+				if (!Launcher.IsSteamAppInstalled(243730) || !Launcher.IsSteamAppInstalled(243750) || (!Launcher.IsSteamAppInstalled(220) && !Launcher.IsSteamAppInstalled(380) && !Launcher.IsSteamAppInstalled(420)))
 				{
-					MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_00).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two, or the Source SDK 2013 Base Singleplayer or Multiplayer in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_00).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 					tabControl1.TabPages.Remove(tabPage2);
 				}
 			}

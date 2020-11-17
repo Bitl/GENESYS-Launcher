@@ -12,5 +12,7 @@ v2.0:
 - The launch options for each game can now be directly edited in the launcher.
 - The launcher now validates which required games you have installed. The launcher will notify you if you do not own or have not yet installed a required game.
 - The launcher now detects both versions of Cyber Diver.
+- The launcher now has the option to load up CS:NEO!
+	- Browse to your TeknoParrot folder, then press play. You can now play CS:NEO comfortably from the launcher!
 v1.0:
 - Original release

@@ -157,6 +157,13 @@ namespace GENESYSLauncher
 
 			if (args.Length == 0)
 			{
+				Process currentProcess = Process.GetCurrentProcess();
+				IntPtr hWnd = currentProcess.MainWindowHandle;
+				if (hWnd != IntPtr.Zero)
+				{
+					SetForegroundWindow(hWnd);
+					ShowWindow(hWnd, 5);
+				}
 				Application.Run(new LauncherForm());
 			}
 			else

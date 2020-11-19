@@ -1,3 +1,5 @@
+v2.0.3:
+- Fixed launcher not popping up after validating the Steamapps directory.
 v2.0.2:
 - Fixed an issue where Steam games wouldn't get validated properly.
 	- You must now define your steamapps/common folder at launch.

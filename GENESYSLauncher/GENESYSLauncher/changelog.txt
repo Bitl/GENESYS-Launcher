@@ -1,3 +1,7 @@
+v2.0.2:
+- Fixed an issue where Steam games wouldn't get validated properly.
+	- You must now define your steamapps/common folder at launch.
+- Fixed further stability issues.
 v2.0.1:
 - Fixed a security issue involving the command line arguments.
 v2.0:

@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("GENESYSLauncher")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Bitl")]
 [assembly: AssemblyProduct("GENESYSLauncher")]
 [assembly: AssemblyCopyright("Copyright 2019")]
 [assembly: AssemblyTrademark("")]

@@ -90,12 +90,14 @@ namespace GENESYSLauncher
 		{
             Properties.Settings.Default[setting] = value;
             Properties.Settings.Default.Save();
+            Properties.Settings.Default.Reload();
         }
 
         public static void WriteBool(string setting, bool value)
         {
             Properties.Settings.Default[setting] = value;
             Properties.Settings.Default.Save();
+            Properties.Settings.Default.Reload();
         }
     }
 
@@ -342,7 +344,14 @@ Once the map loads, access the console once again and enter the bot_add command 
 
             if (gameClass.ValidateGamePath())
             {
-                UpdateActivity(gameToLaunch);
+                try
+                {
+                    UpdateActivity(gameToLaunch);
+                }
+                catch (Exception)
+                {
+
+                }
                 var processInfo = new ProcessStartInfo();
                 processInfo.WorkingDirectory = Path.GetDirectoryName(gameClass.GetGamePath());
                 processInfo.FileName = gameClass.EXEName;
@@ -391,11 +400,39 @@ Once the map loads, access the console once again and enter the bot_add command 
             return (long)timeSpan.TotalSeconds;
         }
 
-        public static bool IsSteamAppInstalled(int steamappid)
+        public static bool IsSteamAppInstalled(string GameFolder)
         {
-            string path = @"HKEY_CURRENT_USER\Software\Valve\Steam\Apps\" + steamappid.ToString();
-            var isInstalled = Registry.GetValue(path, "Installed", null);
-            return isInstalled != null;
+            if (Directory.Exists(Settings.ReadString("SteamAppsDir") + "\\" + GameFolder))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool CheckFolders(string[] folders)
+        {
+            int folderNum = folders.Length;
+            int validFolderNum = 0;
+
+            foreach (string s in folders)
+            {
+                if (IsSteamAppInstalled(s))
+                {
+                    validFolderNum++;
+                }
+            }
+
+            if (validFolderNum == folderNum)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 	
@@ -522,7 +559,10 @@ Once the map loads, access the console once again and enter the bot_add command 
         public static Discord.Discord discord = null;
         public static bool isConsole = true;
         public static bool isDebug = false;
+        public static bool CDAvail = false;
+        public static bool HL2SAvail = false;
+        public static bool L4DSAvail = false;
     }
-	
-	#endregion
+
+    #endregion
 }

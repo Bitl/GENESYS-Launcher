@@ -174,5 +174,17 @@ namespace GENESYSLauncher.Properties {
                 this["CSNEO_ShowTab"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SteamAppsDir {
+            get {
+                return ((string)(this["SteamAppsDir"]));
+            }
+            set {
+                this["SteamAppsDir"] = value;
+            }
+        }
     }
 }

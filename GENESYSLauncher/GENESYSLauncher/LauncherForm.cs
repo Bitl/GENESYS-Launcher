@@ -99,35 +99,26 @@ namespace GENESYSLauncher
             }
 			else
 			{
-				if (!Launcher.IsSteamAppInstalled(243730) || !Launcher.IsSteamAppInstalled(243750) || !Launcher.IsSteamAppInstalled(220))
+				if (!GlobalVars.HL2SAvail)
 				{
-					MessageBox.Show("You must own and install a copy of Half-Life 2 or the Source SDK 2013 Base Singleplayer or Multiplayer in order to run " + Launcher.CreateGame(Launcher.GameType.HL2S).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 					tabControl1.TabPages.Remove(tabPage1);
 				}
 			}
 
-			bool cdv1Available = Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_00).ValidateGamePath();
-            if (!cdv1Available)
+            bool cdv1Available = Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_00).ValidateGamePath();
+			bool cdv12Available = Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_20j).ValidateGamePath();
+			if (!cdv1Available)
             {
-				bool cdv12Available = Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_20j).ValidateGamePath();
 				if (!cdv12Available)
 				{
 					tabControl1.TabPages.Remove(tabPage2);
 				}
-				else
-				{
-					if (!Launcher.IsSteamAppInstalled(243730) || !Launcher.IsSteamAppInstalled(243750) || (!Launcher.IsSteamAppInstalled(220) && !Launcher.IsSteamAppInstalled(380) && !Launcher.IsSteamAppInstalled(420)))
-					{
-						MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two, or the Source SDK 2013 Base Singleplayer or Multiplayer in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_20j).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-						tabControl1.TabPages.Remove(tabPage2);
-					}
-				}
             }
-			else
+
+			if (cdv1Available || cdv12Available)
 			{
-				if (!Launcher.IsSteamAppInstalled(243730) || !Launcher.IsSteamAppInstalled(243750) || (!Launcher.IsSteamAppInstalled(220) && !Launcher.IsSteamAppInstalled(380) && !Launcher.IsSteamAppInstalled(420)))
+				if (!GlobalVars.CDAvail)
 				{
-					MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two, or the Source SDK 2013 Base Singleplayer or Multiplayer in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_00).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 					tabControl1.TabPages.Remove(tabPage2);
 				}
 			}
@@ -139,18 +130,19 @@ namespace GENESYSLauncher
             }
 			else
 			{
-				if (!Launcher.IsSteamAppInstalled(550))
+				if (!GlobalVars.L4DSAvail)
 				{
-					MessageBox.Show("You must own and install a copy of Left 4 Dead 2 in order to run " + Launcher.CreateGame(Launcher.GameType.L4DS).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 					tabControl1.TabPages.Remove(tabPage3);
 				}
 			}
 
 			if (tabControl1.TabPages.Count <= 0)
 			{
-				MessageBox.Show("There are no GENESYS games installed. The launcher will now close.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("There are no GENESYS games installed or there are no valid requirements. The launcher will now close.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 				Close();
 			}
+
+			tabControl1.TabPages[0].Select();
 
 			switchImage();
 			GlobalVars.isConsole = false;
@@ -161,17 +153,18 @@ namespace GENESYSLauncher
 				// Discord Functionality
 				if (File.Exists(GlobalVars.DiscordDllPath) && Properties.Settings.Default.DiscordIntegration)
 				{
+					Console.WriteLine("DISCORD: Loaded!");
+					GlobalVars.discord = new Discord.Discord(Properties.Settings.Default.DiscordAppID, (System.UInt64)Discord.CreateFlags.NoRequireDiscord);
+					GlobalVars.discord.SetLogHook(Discord.LogLevel.Debug, (level, message) =>
+					{
+						Console.WriteLine("Log[{0}] {1}", level, message);
+					});
+
 					// Pump the event look to ensure all callbacks continue to get fired.
 					//https://stackoverflow.com/questions/17142842/infinite-while-loop-with-form-application-c-sharp
 					continueDiscordThreadLoop = true;
 					discordThread = new Thread(() =>
 					{
-						Console.WriteLine("DISCORD: Loaded!");
-						GlobalVars.discord = new Discord.Discord(Properties.Settings.Default.DiscordAppID, (System.UInt64)Discord.CreateFlags.NoRequireDiscord);
-						GlobalVars.discord.SetLogHook(Discord.LogLevel.Debug, (level, message) =>
-						{
-							Console.WriteLine("Log[{0}] {1}", level, message);
-						});
 						Launcher.UpdateActivity(Launcher.GameType.None);
 
 						try
@@ -193,7 +186,6 @@ namespace GENESYSLauncher
 			}
 			catch (Exception)
             {
-
             }
 		}
 
@@ -218,6 +210,7 @@ namespace GENESYSLauncher
 			switchImage();
 			Properties.Settings.Default.LastSelectedTabIndex = tabControl1.SelectedIndex;
 			Properties.Settings.Default.Save();
+			Properties.Settings.Default.Reload();
 		}
 
         void switchImage()

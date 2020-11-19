@@ -7,6 +7,8 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace GENESYSLauncher
@@ -17,6 +19,84 @@ namespace GENESYSLauncher
 	internal sealed class Program
 	{
 		private static string Text = "GENESYS Launcher";
+		private static void ValidateHL2S()
+		{
+			string[] check1 = { "Source SDK Base 2013 Singleplayer" };
+			if (!Launcher.CheckFolders(check1))
+			{
+				string[] check2 = { "Source SDK Base 2013 Multiplayer" };
+				if (!Launcher.CheckFolders(check2))
+				{
+					string[] check3 = { "Half-Life 2" };
+					if (!Launcher.CheckFolders(check3))
+					{
+						MessageBox.Show("You must own and install a copy of Half-Life 2 or the Source SDK 2013 Base Singleplayer or Multiplayer in order to run " + Launcher.CreateGame(Launcher.GameType.HL2S).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
+					else
+					{
+						Console.WriteLine("FOUND: HL2");
+						GlobalVars.HL2SAvail = true;
+					}
+				}
+				else
+				{
+					Console.WriteLine("FOUND: SDK 2013 MP");
+					GlobalVars.HL2SAvail = true;
+				}
+			}
+			else
+			{
+				Console.WriteLine("FOUND: SDK 2013 SP");
+				GlobalVars.HL2SAvail = true;
+			}
+		}
+
+		private static void ValidateCD()
+		{
+			string[] check1 = { "Source SDK Base 2013 Singleplayer" };
+			if (!Launcher.CheckFolders(check1))
+			{
+				string[] check2 = { "Source SDK Base 2013 Multiplayer" };
+				if (!Launcher.CheckFolders(check2))
+				{
+					string[] check3 = { "Half-Life 2", "Half-Life 2/episodic", "Half-Life 2/ep2" };
+					if (!Launcher.CheckFolders(check3))
+					{
+						MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two, or the Source SDK 2013 Base Singleplayer or Multiplayer in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver_Main).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
+					else
+					{
+						Console.WriteLine("FOUND: HL2 and EPISODES");
+						GlobalVars.CDAvail = true;
+					}
+				}
+				else
+				{
+					Console.WriteLine("FOUND: SDK 2013 MP");
+					GlobalVars.CDAvail = true;
+				}
+			}
+			else
+			{
+				Console.WriteLine("FOUND: SDK 2013 SP");
+				GlobalVars.CDAvail = true;
+			}
+		}
+
+		private static void ValidateL4DS()
+		{
+			string[] check4 = { "Left 4 Dead 2" };
+			if (!Launcher.CheckFolders(check4))
+			{
+				MessageBox.Show("You must own and install a copy of Left 4 Dead 2 in order to run " + Launcher.CreateGame(Launcher.GameType.L4DS).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+			else
+			{
+				Console.WriteLine("FOUND: L4D2");
+				GlobalVars.L4DSAvail = true;
+			}
+		}
+
 		/// <summary>
 		/// Program entry point.
 		/// </summary>
@@ -25,6 +105,55 @@ namespace GENESYSLauncher
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+
+			[DllImport("user32.dll")]
+			static extern IntPtr SetForegroundWindow(IntPtr hWnd);
+
+			[DllImport("user32.dll")]
+            static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+			if (string.IsNullOrWhiteSpace(Settings.ReadString("SteamAppsDir")))
+            {
+                MessageBox.Show("Please define your steamapps/common folder", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+				using (var fbd = new FolderBrowserDialog())
+				{
+					DialogResult result = fbd.ShowDialog();
+
+                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath) && fbd.SelectedPath.Contains("common"))
+                    {
+                        Settings.WriteString("SteamAppsDir", fbd.SelectedPath);
+					}
+					else
+                    {
+						Process currentProcess = Process.GetCurrentProcess();
+						IntPtr hWnd = currentProcess.MainWindowHandle;
+						if (hWnd != IntPtr.Zero)
+						{
+							SetForegroundWindow(hWnd);
+							ShowWindow(hWnd, 5);
+						}
+
+						MessageBox.Show("Invalid steamapps/common folder. Please relaunch the application and try again.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+						Environment.Exit(1);
+					}
+				}
+			}
+
+			if (Launcher.CreateGame(Launcher.GameType.HL2S).ValidateGamePath())
+			{
+				ValidateHL2S();
+			}
+
+			if (Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_00).ValidateGamePath() || Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_20j).ValidateGamePath())
+			{
+				ValidateCD();
+			}
+
+			if (Launcher.CreateGame(Launcher.GameType.L4DS).ValidateGamePath())
+			{
+				ValidateL4DS();
+			}
 
 			if (args.Length == 0)
 			{
@@ -38,12 +167,8 @@ namespace GENESYSLauncher
 				{
 					if (Launcher.CreateGame(Launcher.GameType.HL2S).ValidateGamePath())
 					{
-                        if (!Launcher.IsSteamAppInstalled(243730) || !Launcher.IsSteamAppInstalled(243750) || !Launcher.IsSteamAppInstalled(220))
-                        {
-                            MessageBox.Show("You must own and install a copy of Half-Life 2 or the Source SDK 2013 Base Singleplayer or Multiplayer in order to run " + Launcher.CreateGame(Launcher.GameType.HL2S).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        else
-                        {
+						if (GlobalVars.HL2SAvail)
+						{
 							Launcher.LaunchGame(Launcher.GameType.HL2S);
 						}
 					}
@@ -58,11 +183,7 @@ namespace GENESYSLauncher
 				{
 					if (Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_00).ValidateGamePath())
 					{
-						if (!Launcher.IsSteamAppInstalled(243730) || !Launcher.IsSteamAppInstalled(243750) || (!Launcher.IsSteamAppInstalled(220) && !Launcher.IsSteamAppInstalled(380) && !Launcher.IsSteamAppInstalled(420)))
-						{
-							MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two, or the Source SDK 2013 Base Singleplayer or Multiplayer in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_00).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-						}
-						else
+						if (GlobalVars.CDAvail)
 						{
 							Launcher.LaunchGame(Launcher.GameType.CyberDiver_v1_00);
 						}
@@ -78,11 +199,7 @@ namespace GENESYSLauncher
 				{
 					if (Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_20j).ValidateGamePath())
 					{
-						if (!Launcher.IsSteamAppInstalled(243730) || !Launcher.IsSteamAppInstalled(243750) || (!Launcher.IsSteamAppInstalled(220) && !Launcher.IsSteamAppInstalled(380) && !Launcher.IsSteamAppInstalled(420)))
-						{
-							MessageBox.Show("You must own and install a copy of Half-Life 2, Half-Life 2 Episode One, and Half-Life 2 Episode Two, or the Source SDK 2013 Base Singleplayer or Multiplayer in order to run " + Launcher.CreateGame(Launcher.GameType.CyberDiver_v1_20j).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-						}
-						else
+						if (GlobalVars.CDAvail)
 						{
 							Launcher.LaunchGame(Launcher.GameType.CyberDiver_v1_20j);
 						}
@@ -98,11 +215,7 @@ namespace GENESYSLauncher
 				{
 					if (Launcher.CreateGame(Launcher.GameType.L4DS).ValidateGamePath())
 					{
-						if (!Launcher.IsSteamAppInstalled(550))
-						{
-							MessageBox.Show("You must own and install a copy of Left 4 Dead 2 in order to run " + Launcher.CreateGame(Launcher.GameType.L4DS).Name, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-						}
-						else
+						if (GlobalVars.L4DSAvail)
 						{
 							Launcher.LaunchGame(Launcher.GameType.L4DS);
 						}
@@ -141,6 +254,5 @@ namespace GENESYSLauncher
 				}
 			}
 		}
-		
 	}
 }
